@@ -10,10 +10,12 @@ namespace FCourse.Models
     [Table("OrderDetail")]
     public class OrderDetail
     {
-        [ForeignKey("Order")]
+        [Key]
+        [Column(Order = 0)]
         [StringLength(10)]
         private string OrderId { get; set; }
-        [ForeignKey("Course")]
+        [Key]
+        [Column(Order = 1)]
         [StringLength(10)]
         private string CourseId { get; set; }
         private double UnitPrice { get; set; }
