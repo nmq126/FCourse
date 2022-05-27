@@ -12,13 +12,13 @@ namespace FCourse.Models
     {
         [Key]
         [StringLength(10)]
-        private string Id { get; set; }
+        public string Id { get; set; }
         [StringLength(50)]
-        private string Name { get; set; }
+        public string Name { get; set; }
         [StringLength(10)]
-        private string CourseId { get; set; }
+        public string CourseId { get; set; }
         [StringLength(255)]
-        private string Content { get; set; }
-        private Course Course { get; set; }
+        public string Content { get; set; }
+        public Course Course { get; set; }
     }
 }

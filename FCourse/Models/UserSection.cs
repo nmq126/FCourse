@@ -13,12 +13,14 @@ namespace FCourse.Models
         [Key]
         [Column(Order = 0)]
         [StringLength(10)]
-        private string UserId { get; set; }
+        public string UserId { get; set; }
         [Key]
         [Column(Order = 1)]
         [StringLength(10)]
-        private string SectionId { get; set; }
-        private string PausedAt { get; set; }
-        private string IsFinished { get; set; }
+        public string SectionId { get; set; }
+        public string PausedAt { get; set; }
+        public bool IsFinished { get; set; }
+        public virtual User User { get; set; }
+        public virtual Section Section { get; set; }
     }
 }

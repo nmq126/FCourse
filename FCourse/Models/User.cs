@@ -12,25 +12,31 @@ namespace FCourse.Models
     {
         [Key]
         [StringLength(10)]
-        private string Id { get; set; }
+        public string Id { get; set; }
         [StringLength(25)]
-        private string FirstName { get; set; }
+        [Required]
+        public string FirstName { get; set; }
         [StringLength(25)]
-        private string LastName { get; set; }
+        [Required]
+        public string LastName { get; set; }
         [StringLength(20)]
-        private string PhoneNumber { get; set; }
+        [Required]
+        public string PhoneNumber { get; set; }
         [StringLength(50)]
-        private string Description { get; set; }
+        public string Description { get; set; }
         [StringLength(255)]
-        private string Email { get; set; }
+        [Required]
+        public string Email { get; set; }
         [StringLength(255)]
-        private string PasswordHash { get; set; }
+        public string PasswordHash { get; set; }
         [StringLength(255)]
-        private string Salt { get; set; }
-        private int Role { get; set; }
-        private DateTime CreatedAt { get; set; }
-        private DateTime UpdatedAt { get; set; }
-        private DateTime DisabledAt { get; set; }
-        private int Status { get; set; }
+        public string Salt { get; set; }
+        public int Role { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public DateTime DisabledAt { get; set; }
+        public int Status { get; set; }
+        public ICollection<Order> Orders { get; set; }
+
     }
 }

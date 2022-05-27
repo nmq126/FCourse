@@ -12,14 +12,16 @@ namespace FCourse.Models
     {
         [Key]
         [StringLength(10)]
-        private string Id { get; set; }
+        public string Id { get; set; }
         [StringLength(10)]
-        private string ParentId { get; set; }
+        public string ParentId { get; set; }
         [StringLength(50)]
-        private string Name { get; set; }
-        private DateTime CreatedAt { get; set; }
-        private DateTime UpdatedAt { get; set; }
-        private DateTime DisabledAt { get; set; }
-        private int Status { get; set; }
+        [Required]
+        public string Name { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public DateTime DisabledAt { get; set; }
+        public int Status { get; set; }
+        public ICollection<Course> Courses { get; set; }
     }
 }

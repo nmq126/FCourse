@@ -12,15 +12,14 @@ namespace FCourse.Models
     {
         [Key]
         [StringLength(10)]
-        private string Id { get; set; }
-        [ForeignKey("User")]
+        public string Id { get; set; }
         [StringLength(10)]
-        private string UserId { get; set; }
-        private string TotalPrice { get; set; }
-        private DateTime CreatedAt { get; set; }
-        private DateTime UpdatedAt { get; set; }
-        private DateTime DisabledAt { get; set; }
-        private int Status { get; set; }
+        public string UserId { get; set; }
+        public string TotalPrice { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public DateTime DisabledAt { get; set; }
+        public int Status { get; set; }
         public virtual User User { get; set; }
     }
 }

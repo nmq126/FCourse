@@ -12,36 +12,41 @@ namespace FCourse.Models
     {
         [Key]
         [StringLength(10)]
-        private string Id { get; set; }
-        [ForeignKey("Category")]
+        public string Id { get; set; }
         [StringLength(10)]
-        private string CategoryId { get; set; }
-        [ForeignKey("Job")]
+        [Required]
+        public string CategoryId { get; set; }
         [StringLength(10)]
-        private string JobId { get; set; }
+        public string JobId { get; set; }
         [StringLength(255)]
-        private string Name { get; set; }
+        [Required]
+        public string Name { get; set; }
         [StringLength(255)]
-        private string Description { get; set; }
+        [Required]
+        public string Description { get; set; }
         [StringLength(255)]
-        private string Detail { get; set; }
-        private double Duration { get; set; }
+        [Required]
+        public string Detail { get; set; }
+        public double Duration { get; set; }
         [StringLength(10)]
-        [ForeignKey("Level")]
-        private string LevelId { get; set; }
-        private double Rating { get; set; }
+        [Required]
+        public string LevelId { get; set; }
+        public double Rating { get; set; }
         [StringLength(255)]
-        private string Thumbnail { get; set; }
-        private double Price { get; set; }
-        private int Discount { get; set; }
+        [Required]
+        public string Thumbnail { get; set; }
+        [Required]
+        public double Price { get; set; }
+        public int Discount { get; set; }
         [StringLength(10)]
-        private string TeacherId { get; set; }
-        private DateTime CreatedAt { get; set; }
-        private DateTime UpdatedAt { get; set; }
-        private DateTime DisabledAt { get; set; }
-        private int Status { get; set; }
+        [Required]
+        public string TeacherId { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public DateTime DisabledAt { get; set; }
+        public int Status { get; set; }
         public virtual Category Category { get; set; }
         public virtual Level Level { get; set; }
-        public virtual Job Job { get; set; }
+        public ICollection<Section> Sections { get; set; }
     }
 }

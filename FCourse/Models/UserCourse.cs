@@ -13,12 +13,15 @@ namespace FCourse.Models
         [Key]
         [Column(Order = 0)]
         [StringLength(10)]
-        private string IdUser { get; set; }
+        public string UserId { get; set; }
         [Key]
         [Column(Order = 1)]
         [StringLength(10)]
-        private string IdCourse { get; set; }
-        private string Grade { get; set; }
-        private string IsFinished { get; set; }
+        public string CourseId { get; set; }
+        public string Grade { get; set; }
+        public bool IsFinished { get; set; }
+        public virtual User User { get; set; }
+        public virtual Course Course { get; set; }
+
     }
 }
