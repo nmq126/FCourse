@@ -10,12 +10,14 @@ namespace FCourse.Models
     [Table("OrderDetail")]
     public class OrderDetail
     {
+        [ForeignKey("Order")]
         [StringLength(10)]
         private string OrderId { get; set; }
+        [ForeignKey("Course")]
         [StringLength(10)]
         private string CourseId { get; set; }
         private double UnitPrice { get; set; }
-        private Order Order { get; set; }
-        private Course Course { get; set; }
+        public virtual Order Order { get; set; }
+        public virtual Course Course { get; set; }
     }
 }

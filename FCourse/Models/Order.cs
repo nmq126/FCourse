@@ -13,6 +13,7 @@ namespace FCourse.Models
         [Key]
         [StringLength(10)]
         private string Id { get; set; }
+        [ForeignKey("User")]
         [StringLength(10)]
         private string UserId { get; set; }
         private string TotalPrice { get; set; }
@@ -20,6 +21,6 @@ namespace FCourse.Models
         private DateTime UpdatedAt { get; set; }
         private DateTime DisabledAt { get; set; }
         private int Status { get; set; }
-        private User User { get; set; }
+        public virtual User User { get; set; }
     }
 }

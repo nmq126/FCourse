@@ -13,12 +13,13 @@ namespace FCourse.Models
         [Key]
         [StringLength(10)]
         private string Id { get; set; }
+        [ForeignKey("Course")]
         [StringLength(10)]
         private string CourseId { get; set; }
         [StringLength(255)]
         private string Question { get; set; }
         [StringLength(255)]
         private string Answer { get; set; }
-        private Course Course { get; set; }
+        public virtual Course Course { get; set; }
     }
 }

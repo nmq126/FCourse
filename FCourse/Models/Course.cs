@@ -13,8 +13,10 @@ namespace FCourse.Models
         [Key]
         [StringLength(10)]
         private string Id { get; set; }
+        [ForeignKey("Category")]
         [StringLength(10)]
         private string CategoryId { get; set; }
+        [ForeignKey("Job")]
         [StringLength(10)]
         private string JobId { get; set; }
         [StringLength(255)]
@@ -25,6 +27,7 @@ namespace FCourse.Models
         private string Detail { get; set; }
         private double Duration { get; set; }
         [StringLength(10)]
+        [ForeignKey("Level")]
         private string LevelId { get; set; }
         private double Rating { get; set; }
         [StringLength(255)]
@@ -37,8 +40,8 @@ namespace FCourse.Models
         private DateTime UpdatedAt { get; set; }
         private DateTime DisabledAt { get; set; }
         private int Status { get; set; }
-        private Category Category { get; set; }
-        private Level Level { get; set; }
-        private Job Job { get; set; }
+        public virtual Category Category { get; set; }
+        public virtual Level Level { get; set; }
+        public virtual Job Job { get; set; }
     }
 }

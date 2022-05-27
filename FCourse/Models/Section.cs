@@ -13,7 +13,7 @@ namespace FCourse.Models
         [Key]
         [StringLength(10)]
         private string Id { get; set; }
-        [ForeignKey("CourseId")]
+        [ForeignKey("Course")]
         [StringLength(10)]
         private string CourseId { get; set; }
         [StringLength(10)]
@@ -23,6 +23,6 @@ namespace FCourse.Models
         private string Content { get; set; }
         private double Duration { get; set; }
         private int Order { get; set; }
-        private Course Course { get; set; }
+        public virtual Course Course { get; set; }
     }
 }
