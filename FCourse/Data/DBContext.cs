@@ -28,5 +28,7 @@ namespace FCourse.Data
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
+
+        public System.Data.Entity.DbSet<FCourse.Models.Job> Jobs { get; set; }
     }
 }

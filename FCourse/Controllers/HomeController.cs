@@ -26,5 +26,19 @@ namespace FCourse.Controllers
 
             return View();
         }
+
+        public ActionResult Test()
+        {
+            ViewBag.Message = "Your Test page.";
+
+            return View();
+        }
+
+        public ActionResult TestAdmin()
+        {
+            ViewBag.Message = "Your Test page.";
+
+            return View();
+        }
     }
 }
