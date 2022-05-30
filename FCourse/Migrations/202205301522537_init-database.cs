@@ -1,4 +1,4 @@
-﻿namespace FCourse.Migrations
+namespace FCourse.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -12,7 +12,6 @@
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 10),
-                        ParentId = c.String(maxLength: 10),
                         Name = c.String(nullable: false, maxLength: 50),
                         CreatedAt = c.DateTime(nullable: false),
                         UpdatedAt = c.DateTime(nullable: false),
@@ -27,7 +26,6 @@
                     {
                         Id = c.String(nullable: false, maxLength: 10),
                         CategoryId = c.String(nullable: false, maxLength: 10),
-                        JobId = c.String(maxLength: 10),
                         Name = c.String(nullable: false, maxLength: 255),
                         Description = c.String(nullable: false, maxLength: 255),
                         Detail = c.String(nullable: false, maxLength: 255),
@@ -46,8 +44,10 @@
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Category", t => t.CategoryId, cascadeDelete: true)
                 .ForeignKey("dbo.Level", t => t.LevelId, cascadeDelete: true)
+                .ForeignKey("dbo.Teacher", t => t.TeacherId, cascadeDelete: true)
                 .Index(t => t.CategoryId)
-                .Index(t => t.LevelId);
+                .Index(t => t.LevelId)
+                .Index(t => t.TeacherId);
             
             CreateTable(
                 "dbo.Level",
@@ -125,6 +125,17 @@
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.Teacher",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 10),
+                        Name = c.String(maxLength: 50),
+                        Thumbnail = c.String(storeType: "ntext"),
+                        Description = c.String(storeType: "ntext"),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.UserCourse",
                 c => new
                     {
@@ -162,6 +173,7 @@
             DropForeignKey("dbo.UserSection", "SectionId", "dbo.Section");
             DropForeignKey("dbo.UserCourse", "UserId", "dbo.User");
             DropForeignKey("dbo.UserCourse", "CourseId", "dbo.Course");
+            DropForeignKey("dbo.Course", "TeacherId", "dbo.Teacher");
             DropForeignKey("dbo.OrderDetail", "OrderId", "dbo.Order");
             DropForeignKey("dbo.Order", "UserId", "dbo.User");
             DropForeignKey("dbo.OrderDetail", "CourseId", "dbo.Course");
@@ -176,10 +188,12 @@
             DropIndex("dbo.OrderDetail", new[] { "CourseId" });
             DropIndex("dbo.OrderDetail", new[] { "OrderId" });
             DropIndex("dbo.Section", new[] { "CourseId" });
+            DropIndex("dbo.Course", new[] { "TeacherId" });
             DropIndex("dbo.Course", new[] { "LevelId" });
             DropIndex("dbo.Course", new[] { "CategoryId" });
             DropTable("dbo.UserSection");
             DropTable("dbo.UserCourse");
+            DropTable("dbo.Teacher");
             DropTable("dbo.User");
             DropTable("dbo.Order");
             DropTable("dbo.OrderDetail");

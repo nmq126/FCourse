@@ -18,17 +18,15 @@ namespace FCourse.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Level> Levels { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Section> Sections { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<UserCourse> UserCourses { get; set; }
         public DbSet<UserSection> UserSections { get; set; }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
-
-        public System.Data.Entity.DbSet<FCourse.Models.Job> Jobs { get; set; }
     }
 }

@@ -13,8 +13,6 @@ namespace FCourse.Models
         [Key]
         [StringLength(10)]
         public string Id { get; set; }
-        [StringLength(10)]
-        public string ParentId { get; set; }
         [StringLength(50)]
         [Required]
         public string Name { get; set; }
