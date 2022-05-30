@@ -13,7 +13,7 @@ namespace FCourse.Models
         [Key]
         [StringLength(10)]
         public string Id { get; set; }
-        [StringLength(50)]
+        [Column(TypeName = "ntext")]
         [Required]
         public string Name { get; set; }
         public DateTime CreatedAt { get; set; }

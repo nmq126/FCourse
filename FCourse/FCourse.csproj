@@ -137,6 +137,14 @@
     <Compile Include="Migrations\202205301522537_init-database.Designer.cs">
       <DependentUpon>202205301522537_init-database.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202205301614406_update_database.cs" />
+    <Compile Include="Migrations\202205301614406_update_database.Designer.cs">
+      <DependentUpon>202205301614406_update_database.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205301619489_update_database_1.cs" />
+    <Compile Include="Migrations\202205301619489_update_database_1.Designer.cs">
+      <DependentUpon>202205301619489_update_database_1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Course.cs" />
@@ -868,6 +876,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202205301522537_init-database.resx">
       <DependentUpon>202205301522537_init-database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205301614406_update_database.resx">
+      <DependentUpon>202205301614406_update_database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205301619489_update_database_1.resx">
+      <DependentUpon>202205301619489_update_database_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

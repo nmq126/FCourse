@@ -19,10 +19,10 @@ namespace FCourse.Models
         [StringLength(255)]
         [Required]
         public string Name { get; set; }
-        [StringLength(255)]
+        [Column(TypeName = "ntext")]
         [Required]
         public string Description { get; set; }
-        [StringLength(255)]
+        [Column(TypeName = "ntext")]
         [Required]
         public string Detail { get; set; }
         public double Duration { get; set; }

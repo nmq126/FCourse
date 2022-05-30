@@ -22,7 +22,7 @@ namespace FCourse.Models
         [StringLength(20)]
         [Required]
         public string PhoneNumber { get; set; }
-        [StringLength(50)]
+        [Column(TypeName = "ntext")]
         public string Description { get; set; }
         [StringLength(255)]
         [Required]

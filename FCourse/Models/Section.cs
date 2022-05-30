@@ -16,7 +16,7 @@ namespace FCourse.Models
         [Required]
         [StringLength(10)]
         public string CourseId { get; set; }
-        [StringLength(10)]
+        [Column(TypeName = "ntext")]
         [Required]
         public string Name { get; set; }
         [Required]
