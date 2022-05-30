@@ -256,11 +256,11 @@
                     <div class="row">
                         <div class="page-header">
                             <div class="d-flex align-items-center">
-                                <h2 class="page-header-title">Dashboards</h2>
+                                <h2 class="page-header-title">Tên</h2>
                                 <div>
                                     <ul class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="db-default.html"><i class="ti ti-home"></i></a></li>
-                                        <li class="breadcrumb-item active">All Dashboards</li>
+                                        <li class="breadcrumb-item active">tên</li>
                                     </ul>
                                 </div>
                             </div>
@@ -268,11 +268,7 @@
                     </div>
                     <!-- End Page Header -->
                     <div class="row">
-                        <div class="col-xl-12">
-                            <div class="row">
-                                @RenderBody()
-                            </div>
-                        </div>
+                        @RenderBody()
                     </div>
                 </div>
                 <!-- End Container -->
@@ -559,5 +555,7 @@
     <script src="~/Content/admin_vendor/js/nicescroll/nicescroll.min.js"></script>
     <script src="~/Content/admin_vendor/js/app/app.min.js"></script>
     <!-- End Page Vendor Js -->
+    @RenderSection("scripts", required: false)
+
 </body>
 </html>
