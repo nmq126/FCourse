@@ -1,0 +1,133 @@
+﻿@model FCourse.Models.Course
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<h2>Edit</h2>
+
+<div class="col-xl-12">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="widget has-shadow">
+            <div class="widget-header bordered no-actions d-flex align-items-center">
+                <h4>Course #@Html.DisplayFor(model => model.Id)</h4>
+            </div>
+            <div class="widget-body">
+                <div class="col-10 ml-auto">
+                    <div class="section-title mt-3 mb-5">
+                        <h4>01. General Informations</h4>
+                    </div>
+                </div>
+                <form class="form-horizontal">
+                    <div class="form-group row d-flex align-items-center mb-5">
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Id</label>
+                        <div class="col-lg-6">
+                            <input type="text" disabled class="form-control" value="@Model.Id">
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center mb-5">
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Thumbnail</label>
+                        <div class="col-lg-6">
+                            <img height="250" src="@Model.Thumbnail" alt="Alternate Text" />
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center mb-5">
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Name</label>
+                        <div class="col-lg-6">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center mb-5">
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Category</label>
+                        <div class="col-lg-6 select">
+                            @Html.DropDownListFor(model => model.CategoryId, ViewBag.CategoryId as SelectList, new { @class = "custom-select form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center mb-5">
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Level</label>
+                        <div class="col-lg-6 select">
+                            @Html.DropDownListFor(model => model.LevelId, ViewBag.LevelId as SelectList, new { @class = "custom-select form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center mb-5">
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Instructor</label>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.TeacherId)">
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center mb-5">
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Description</label>
+                        <div class="col-lg-6">
+                            <textarea class="form-control" rows="3">@Model.Description
+                        </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center mb-5">
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Description</label>
+                        <div class="col-lg-6">
+                            <textarea class="form-control" rows="5">@Model.Detail
+                        </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center mb-5">
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Duration (s)</label>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" value="@Model.Duration">
+                        </div>
+                    </div>
+
+                    <div class="form-group row d-flex align-items-center mb-5">
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Price</label>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" value="@Model.Price">
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center mb-5">
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Discount (%)</label>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" value="@Model.Price">
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center mb-5">
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Status</label>
+                        <div class="col-lg-6 select">
+                            <select class="custom-select form-control">
+                                <option value="1" @(Model.Status == 1 ? "selected" : "")>Active</option>
+                                <option value="0" @(Model.Status == 0 ? "selected" : "")>Disable</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </form>
+                <div class="col-10 ml-auto">
+                    <div class="section-title mt-3 mb-5">
+                        <h4>02. Section Informations</h4>
+                    </div>
+                </div>
+
+                <div class="em-separator separator-dashed"></div>
+                <div class="text-left">
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

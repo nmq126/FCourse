@@ -1,0 +1,61 @@
+﻿@model IEnumerable<FCourse.Models.Course>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<h2>Course list</h2>
+<div class="col-xl-12">
+    <div class="widget has-shadow">
+        <div class="widget-body">
+        </div>
+    </div>
+    <!-- Default -->
+    <div class="widget has-shadow">
+        <div class="widget-body">
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Thumbnail</th>
+                            <th>Category</th>
+                            <th>Level</th>
+                            <th>Instructor</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td><span class="text-primary">@Html.DisplayFor(modelItem => item.Id)</span></td>
+                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                <td><img height="50" src="@Html.DisplayFor(modelItem => item.Thumbnail)" alt="thumbnail" /></td>
+                                <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Level.Name)</td>
+                                <td>@Html.DisplayFor(modelItem => item.TeacherId)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                                <td class="td-actions">
+                                    <a href="@Url.Action("Details", "Courses", new { id = item.Id })">
+                                        <i class="ion ion-information"></i>
+                                    </a>
+                                    <a href="@Url.Action("Edit", "Courses", new { id = item.Id })">
+                                        <i class="ion ion-edit"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- End Default -->
+</div>
+

@@ -16,8 +16,6 @@ namespace FCourse.Models
         [StringLength(10)]
         [Required]
         public string CategoryId { get; set; }
-        [StringLength(10)]
-        public string JobId { get; set; }
         [StringLength(255)]
         [Required]
         public string Name { get; set; }
