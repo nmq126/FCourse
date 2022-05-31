@@ -7,6 +7,7 @@ using System.Web;
 
 namespace FCourse.Models
 {
+    [Table("Teacher")]
     public class Teacher
     {
         [Key]

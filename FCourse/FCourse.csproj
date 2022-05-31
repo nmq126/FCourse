@@ -845,13 +845,7 @@
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Shared\_LayoutPageAdmin.cshtml" />
     <Content Include="Views\Home\TestAdmin.cshtml" />
-    <Content Include="Views\Admin\Categories\Create.cshtml" />
-    <Content Include="Views\Admin\Categories\Delete.cshtml" />
-    <Content Include="Views\Admin\Categories\Details.cshtml" />
-    <Content Include="Views\Admin\Categories\Edit.cshtml" />
-    <Content Include="Views\Admin\Categories\Index.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />
-    <Content Include="Views\Courses\Delete.cshtml" />
     <Content Include="Views\Courses\Details.cshtml" />
     <Content Include="Views\Courses\Edit.cshtml" />
     <Content Include="Views\Courses\Index.cshtml" />

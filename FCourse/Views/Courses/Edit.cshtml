@@ -5,8 +5,6 @@
     Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
 }
 
-<h2>Edit</h2>
-
 <div class="col-xl-12">
 
     @using (Html.BeginForm())
@@ -15,7 +13,7 @@
 
         <div class="widget has-shadow">
             <div class="widget-header bordered no-actions d-flex align-items-center">
-                <h4>Course #@Html.DisplayFor(model => model.Id)</h4>
+                <h4>Edit Course #@Html.DisplayFor(model => model.Id)</h4>
             </div>
             <div class="widget-body">
                 <div class="col-10 ml-auto">
@@ -33,6 +31,8 @@
                     <div class="form-group row d-flex align-items-center mb-5">
                         <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Thumbnail</label>
                         <div class="col-lg-6">
+                            @Html.EditorFor(model => model.Thumbnail, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Thumbnail, "", new { @class = "text-danger" })
                             <img height="250" src="@Model.Thumbnail" alt="Alternate Text" />
                         </div>
                     </div>
@@ -46,52 +46,64 @@
                     <div class="form-group row d-flex align-items-center mb-5">
                         <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Category</label>
                         <div class="col-lg-6 select">
-                            @Html.DropDownListFor(model => model.CategoryId, ViewBag.CategoryId as SelectList, new { @class = "custom-select form-control" })
+                            @*@Html.EditorFor(model => model.CategoryId, new { htmlAttributes = new { @class = "form-control", style = "display:none" } })*@
+                            @Html.DropDownListFor(model => model.CategoryId, ViewBag.CategoryList as SelectList, new { @class = "custom-select form-control" })
+                            @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center mb-5">
                         <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Level</label>
                         <div class="col-lg-6 select">
-                            @Html.DropDownListFor(model => model.LevelId, ViewBag.LevelId as SelectList, new { @class = "custom-select form-control" })
+                            @*@Html.EditorFor(model => model.LevelId, new { htmlAttributes = new { @class = "form-control", style = "display:none" } })*@
+                            @Html.DropDownListFor(model => model.LevelId, ViewBag.LevelList as SelectList, new { @class = "custom-select form-control" })
+                            @Html.ValidationMessageFor(model => model.LevelId, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center mb-5">
-                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Instructor</label>
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Teacher</label>
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.TeacherId)">
+                            @*@Html.EditorFor(model => model.TeacherId, new { htmlAttributes = new { @class = "form-control", style = "display:none" } })*@
+                            @Html.DropDownListFor(model => model.TeacherId, ViewBag.TeacherList as SelectList, new { @class = "custom-select form-control" })
+                            @Html.ValidationMessageFor(model => model.TeacherId, "", new { @class = "text-danger" })
+
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center mb-5">
                         <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Description</label>
                         <div class="col-lg-6">
-                            <textarea class="form-control" rows="3">@Model.Description
-                        </textarea>
+                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = 3 })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center mb-5">
-                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Description</label>
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Detail</label>
                         <div class="col-lg-6">
-                            <textarea class="form-control" rows="5">@Model.Detail
-                        </textarea>
+                            @Html.TextAreaFor(model => model.Detail, new { @class = "form-control", @rows = 6 })
+                            @Html.ValidationMessageFor(model => model.Detail, "", new { @class = "text-danger" })
+
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center mb-5">
                         <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Duration (s)</label>
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" value="@Model.Duration">
+                            @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group row d-flex align-items-center mb-5">
                         <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Price</label>
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" value="@Model.Price">
+                            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center mb-5">
                         <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Discount (%)</label>
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" value="@Model.Price">
+                            @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center mb-5">
@@ -101,15 +113,12 @@
                                 <option value="1" @(Model.Status == 1 ? "selected" : "")>Active</option>
                                 <option value="0" @(Model.Status == 0 ? "selected" : "")>Disable</option>
                             </select>
+                            @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control", style = "display:none" } })
+                            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                 </form>
-                <div class="col-10 ml-auto">
-                    <div class="section-title mt-3 mb-5">
-                        <h4>02. Section Informations</h4>
-                    </div>
-                </div>
 
                 <div class="em-separator separator-dashed"></div>
                 <div class="text-left">
@@ -123,11 +132,72 @@
         </div>
     }
 </div>
+<div class="col-xl-12">
+    <div class="widget has-shadow">
+        <div class="widget-body">
+            <div class="col-10 ml-auto">
+                <div class="section-title mt-3 mb-5">
+                    <h4>02. Section Informations</h4>
+                </div>
+            </div>
+            @if (Model.Sections.Count() == 0)
+            {
+                <p class="col-10 ml-auto">No Section added for this course yet</p>
+            }
+            else
+            {
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Content</th>
+                            <th>Duration (s)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var section in Model.Sections.ToList())
+                        {
+                            <tr>
+                                <td>@Html.Raw(section.Order)</td>
+                                <td><span class="text-primary">@Html.Raw(section.Id)</span></td>
+                                <td>@Html.Raw(section.Name)</td>
+                                <td>@(section.Type == 0 ? "Video" : "Reading")</td>
+                                <td>@Html.Raw(section.Content)</td>
+                                <td>@Html.Raw(section.Duration)</td>
+                                <td class="td-actions">
+                                    <a href="@Url.Action("Details", "Sections", new { id = section.Id })">
+                                        <i class="ion ion-information"></i>
+                                    </a>
+                                    <a href="@Url.Action("Edit", "Sections", new { id = section.Id })">
+                                        <i class="ion ion-edit"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+
+            }
+            <div class="em-separator separator-dashed"></div>
+            <div class="text-right">
+                <button class="btn btn-outline-dark" type="button">@Html.ActionLink("Edit", "Edit", new { id = Model.Id })</button>
+                <button class="btn btn-light" type="button">@Html.ActionLink("Back to List", "Index")</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+    @Scripts.Render("~/bundles/jqueryval")
+}

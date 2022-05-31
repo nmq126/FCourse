@@ -26,7 +26,8 @@ namespace FCourse.Data
         public DbSet<UserSection> UserSections { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            Database.SetInitializer<DBContext>(null);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

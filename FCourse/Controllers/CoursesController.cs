@@ -19,7 +19,7 @@ namespace FCourse.Controllers
         // GET: Courses
         public ActionResult Index()
         {
-            var courses = db.Courses.Include(c => c.Category).Include(c => c.Level);
+            var courses = db.Courses;
             return View(courses.ToList());
         }
 
@@ -43,8 +43,9 @@ namespace FCourse.Controllers
         // GET: Courses/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "ParentId");
-            ViewBag.LevelId = new SelectList(db.Levels, "Id", "Name");
+            ViewBag.CategoryList = new SelectList(db.Categories, "Id", "Name");
+            ViewBag.LevelList = new SelectList(db.Levels, "Id", "Name");
+            ViewBag.TeacherList = new SelectList(db.Teachers, "Id", "Name");
             return View();
         }
 
@@ -74,14 +75,16 @@ namespace FCourse.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses.Find(id);
+            Course course = db.Courses
+              .Include(c => c.Sections)
+              .First(c => c.Id == id);
             if (course == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", course.CategoryId);
-            Debug.WriteLine("cateid: " + course.CategoryId);
-            ViewBag.LevelId = new SelectList(db.Levels, "Id", "Name", course.LevelId);
+            ViewBag.CategoryList = new SelectList(db.Categories, "Id", "Name", course.CategoryId);
+            ViewBag.LevelList = new SelectList(db.Levels, "Id", "Name", course.LevelId);
+            ViewBag.TeacherList = new SelectList(db.Teachers, "Id", "Name", course.TeacherId);
             return View(course);
         }
 
@@ -98,35 +101,9 @@ namespace FCourse.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "ParentId", course.CategoryId);
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", course.CategoryId);
             ViewBag.LevelId = new SelectList(db.Levels, "Id", "Name", course.LevelId);
             return View(course);
-        }
-
-        // GET: Courses/Delete/5
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Find(id);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-            return View(course);
-        }
-
-        // POST: Courses/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            Course course = db.Courses.Find(id);
-            db.Courses.Remove(course);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
