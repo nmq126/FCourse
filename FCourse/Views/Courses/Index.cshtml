@@ -25,7 +25,7 @@
                             <th>Level</th>
                             <th>Instructor</th>
                             <th>Price</th>
-                            <th>Action</th>
+                            <th width="8%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,7 +37,7 @@
                                 <td><img height="50" src="@Html.DisplayFor(modelItem => item.Thumbnail)" alt="thumbnail" /></td>
                                 <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Level.Name)</td>
-                                <td>@Html.DisplayFor(modelItem => item.TeacherId)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Teacher.Name)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Price)</td>
                                 <td class="td-actions">
                                     <a href="@Url.Action("Details", "Courses", new { id = item.Id })">

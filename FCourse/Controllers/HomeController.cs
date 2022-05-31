@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FCourse.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,13 @@ namespace FCourse.Controllers
 {
     public class HomeController : Controller
     {
+        private DBContext db = new DBContext();
+
         public ActionResult Index()
         {
-            return View();
+            ViewBag.TeacherList = from s in db.Teachers select s;
+            ViewBag.CategoryList = from s in db.Categories select s;
+            return View(db.Courses.ToList());
         }
 
         public ActionResult About()
