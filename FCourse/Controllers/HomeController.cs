@@ -1,4 +1,5 @@
 ﻿using FCourse.Data;
+using FCourse.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,25 @@ namespace FCourse.Controllers
         public ActionResult Index()
         {
             ViewBag.TeacherList = from s in db.Teachers select s;
+            ViewBag.CategoryList = from s in db.Categories select s;
+            return View(db.Courses.ToList());
+        }
+
+        public ActionResult Detail(string id)
+        {
+            Course course = db.Courses.Find(id);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.CategoryList = from s in db.Categories select s;
+            ViewBag.SectionList = db.Sections.Where(x => x.CourseId == id);
+            ViewBag.SectionCount = db.Sections.Where(x => x.CourseId == id).Count();
+            return View(course);
+        }
+
+        public ActionResult Explore()
+        {
             ViewBag.CategoryList = from s in db.Categories select s;
             return View(db.Courses.ToList());
         }
