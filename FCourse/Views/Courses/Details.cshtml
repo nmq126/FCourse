@@ -139,7 +139,7 @@
                     <h4>02. Section Informations</h4>
                 </div>
             </div>
-            @if (Model.Sections.Count() == 0)
+            @if (Model.Sections == null || Model.Sections.Count() == 0)
             {
                 <p class="col-10 ml-auto">No Section added for this course yet</p>
             }
@@ -165,7 +165,7 @@
                                 <td><span class="text-primary">@Html.Raw(section.Id)</span></td>
                                 <td>@Html.Raw(section.Name)</td>
                                 <td>@(section.Type == 0 ? "Video" : "Reading")</td>
-                                <td>@Html.Raw(section.Content)</td>
+                                <td>@(section.Type == 0 ? section.Content : "Reading content too long to display")</td>
                                 <td>@Html.Raw(section.Duration)</td>
                                 <td class="td-actions">
                                     <a href="@Url.Action("Details", "Sections", new { id = section.Id })">
