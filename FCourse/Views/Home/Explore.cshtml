@@ -1,9 +1,50 @@
-﻿@model IEnumerable<FCourse.Models.Course>
+﻿@model PagedList.IPagedList<FCourse.Models.Course>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "FCourse - Explore";
     Layout = "~/Views/Shared/_LayoutPageClient.cshtml";
 }
+
+<style>
+    .pagination-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .pagination-container ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /*background-color: #333;*/
+        }
+
+        .pagination-container li {
+            float: left;
+            border-right: 1px solid #bbb;
+        }
+
+            .pagination-container li:last-child {
+                border-right: none;
+            }
+
+            .pagination-container li a {
+                display: block;
+                color: Black;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+                .pagination-container li a:hover:not(.active) {
+                    background-color: orangered;
+                }
+
+        .pagination-container .active {
+            background-color: orangered;
+        }
+</style>
 
 <div class="sa4d25">
     <div class="container-fluid">
@@ -12,61 +53,115 @@
                 <div class="section3125">
                     <div class="explore_search">
                         <div class="ui search focus">
-                            <div class="ui left icon input swdh11">
-                                <input class="prompt srch_explore" type="text" placeholder="Search for Course, Tutors and more..">
-                                <i class="uil uil-search-alt icon icon2"></i>
-                            </div>
+                            @using (Html.BeginForm("Explore", "Home", FormMethod.Get))
+                            {
+                                <div class="ui left icon input swdh11">
+                                    @Html.TextBox("keyword", ViewBag.Keyword as string, new { @class = "prompt srch_explore", placeholder = "Search for Course, Tutors and more.." })
+                                    <i class="uil uil-search-alt icon icon2"></i>
+                                </div>
+                                <div class="row">
+                                    <select name="categoryId" id="categoryId" class="form-control mt-3 ml-3 mr-3 col-lg-3" onchange="javascript:this.form.submit()">
+                                        <option value="">Select Category</option>
+                                        @foreach (var category in ViewBag.CategoryList)
+                                        {
+                                            if (category.Id == ViewBag.CategoryId)
+                                            {
+                                                <option value=@category.Id selected>@category.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value=@category.Id>@category.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                    <select name="levelId" id="levelId" class="form-control mt-3 col-lg-3" onchange="javascript:this.form.submit()">
+                                        <option value="">Select Level</option>
+                                        @foreach (var level in ViewBag.LevelList)
+                                        {
+                                            if (level.Id == ViewBag.LevelID)
+                                            {
+                                                <option value=@level.Id selected>@level.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value=@level.Id>@level.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+
+                                <input type="submit" hidden />
+                            }
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-12">
-                <div class="_14d25">
-                    <div class="row">
-                        @foreach (var course in Model)
-                        {
-                            <div class="col-lg-3 col-md-4">
-                                <div class="fcrse_1 mt-30">
-                                    <a href="/Home/Detail/?id=@course.Id" class="fcrse_img">
-                                        <img src="@course.Thumbnail" alt="">
-                                        <div class="course-overlay">
-                                            <div class="badge_seller">@course.Level.Name</div>
-                                            <div class="crse_reviews">
-                                                <i class="uil uil-star"></i>@course.Rating
+                <div class="col-md-12">
+                    <div class="_14d25">
+                        <div class="row">
+                            @foreach (var course in Model)
+                            {
+                                <div class="col-lg-3 col-md-4">
+                                    <div class="fcrse_1 mt-30">
+                                        <a href="/Home/Detail/?id=@course.Id" class="fcrse_img">
+                                            <img src="@course.Thumbnail" alt="">
+                                            <div class="course-overlay">
+                                                <div class="badge_seller">@course.Level.Name</div>
+                                                <div class="crse_reviews">
+                                                    <i class="uil uil-star"></i>@course.Rating
+                                                </div>
+                                                <span class="play_btn1"><i class="uil uil-play"></i></span>
+                                                <div class="crse_timer">
+                                                    @{
+                                                        var courseHour = Math.Round(course.Duration / 3600);
+                                                    }
+                                                    @courseHour hours
+                                                </div>
                                             </div>
-                                            <span class="play_btn1"><i class="uil uil-play"></i></span>
-                                            <div class="crse_timer">
-                                                @{
-                                                    var courseHour = Math.Round(course.Duration / 3600);
-                                                }
-                                                @courseHour hours
+                                        </a>
+                                        <div class="fcrse_content">
+                                            <div class="eps_dots more_dropdown">
+                                                <a href="#"><i class="uil uil-ellipsis-v"></i></a>
+                                                <div class="dropdown-content">
+                                                    <span><i class='uil uil-share-alt'></i>Share</span>
+                                                    <span><i class="uil uil-heart"></i>Save</span>
+                                                    <span><i class='uil uil-ban'></i>Not Interested</span>
+                                                    <span><i class="uil uil-windsock"></i>Report</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                    <div class="fcrse_content">
-                                        <div class="eps_dots more_dropdown">
-                                            <a href="#"><i class="uil uil-ellipsis-v"></i></a>
-                                            <div class="dropdown-content">
-                                                <span><i class='uil uil-share-alt'></i>Share</span>
-                                                <span><i class="uil uil-heart"></i>Save</span>
-                                                <span><i class='uil uil-ban'></i>Not Interested</span>
-                                                <span><i class="uil uil-windsock"></i>Report</span>
+                                            <div class="vdtodt">
                                             </div>
-                                        </div>
-                                        <div class="vdtodt">
-                                        </div>
-                                        <a href="course_detail_view.html" class="crse14s">@course.Name</a>
-                                        <a href="#" class="crse-cate">@course.Category.Name</a>
-                                        <div class="auth1lnkprce">
-                                            <p class="cr1fot">By <a href="#">@course.Teacher.Name</a></p>
-                                            <div class="prce142">@course.Price</div>
-                                            <button class="shrt-cart-btn" title="cart"><i class="uil uil-shopping-cart-alt"></i></button>
+                                            <a href="course_detail_view.html" class="crse14s">@course.Name</a>
+                                            <a href="#" class="crse-cate">@course.Category.Name</a>
+                                            <div class="auth1lnkprce">
+                                                <p class="cr1fot">By <a href="#">@course.Teacher.Name</a></p>
+                                                <div class="prce142">$@course.Price</div>
+                                                <a href="#" class="shrt-cart-btn addToCart " title="cart" data-id="@course.Id">
+                                                    <i class="uil uil-shopping-cart-alt">
+                                                    </i>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        }
+                            }
+                        </div>
+                        @Html.PagedListPager(Model, page => Url.Action("Explore",
+                            new { keyword = ViewBag.Keyword, categoryId = ViewBag.CategoryID, levelId = ViewBag.LevelID, page }),
+                            new PagedListRenderOptions
+                            {
+                                DisplayLinkToIndividualPages = true,
+                                DisplayPageCountAndCurrentLocation = false,
+                                MaximumPageNumbersToDisplay = 10,
+                                LinkToFirstPageFormat = "««",
+                                LinkToPreviousPageFormat = "«",
+                                LinkToIndividualPageFormat = "{0}",
+                                LinkToNextPageFormat = "»",
+                                LinkToLastPageFormat = "»»",
+                                ContainerDivClasses = new string[] { "pagination-container mt-3" },
+                                UlElementClasses = new string[] { "pagination" },
+                                LiElementClasses = new string[] { "page-item" }
+                            })
                     </div>
                 </div>
             </div>

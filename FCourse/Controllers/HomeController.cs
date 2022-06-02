@@ -1,5 +1,6 @@
 ﻿using FCourse.Data;
 using FCourse.Models;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,10 +33,35 @@ namespace FCourse.Controllers
             return View(course);
         }
 
-        public ActionResult Explore()
+        public ActionResult Explore(string keyword, string categoryId, string levelId, int? page)
         {
+            var courses = from s in db.Courses select s;
             ViewBag.CategoryList = from s in db.Categories select s;
-            return View(db.Courses.ToList());
+            ViewBag.LevelList = from s in db.Levels select s;
+            ViewBag.CategoryID = categoryId;
+            ViewBag.Keyword = keyword;
+            ViewBag.LevelID = levelId;
+
+            if (!String.IsNullOrEmpty(keyword))
+            {
+                courses = courses.Where(s => s.Name.Contains(keyword)
+                                       || s.Teacher.Name.Contains(keyword));
+            }
+
+            if (!String.IsNullOrEmpty(categoryId))
+            {
+                courses = courses.Where(s => s.CategoryId == categoryId);
+            }
+
+            if (!String.IsNullOrEmpty(levelId))
+            {
+                courses = courses.Where(s => s.LevelId == levelId);
+            }
+
+            int pageNumber = (page ?? 1);
+            int pageSize = 8;
+
+            return View(courses.OrderBy(s => s.CreatedAt).ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult About()
