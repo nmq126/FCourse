@@ -25,7 +25,7 @@ namespace FCourse.Controllers
         // GET: Courses
         public ActionResult Index()
         {
-            var courses = db.Courses.OrderByDescending(c => c.CreatedAt);
+            var courses = db.Courses.OrderBy(c => c.CreatedAt);
             return View(courses.ToList());
         }
 
