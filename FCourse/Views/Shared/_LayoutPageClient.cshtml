@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, shrink-to-fit=9">
-    
+
     <title>@ViewBag.Title</title>
 
     @*<link rel="icon" type="image/png" href="@Url.Content("~/Content/client_img/fav.png")">*@
@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="@Url.Content("~/Content/client_vendor/OwlCarousel/assets/owl.theme.default.min.css")" media="screen" type="text/css" />
     <link rel="stylesheet" href="@Url.Content("~/Content/client_vendor/bootstrap/css/bootstrap.min.css")" media="screen" type="text/css" />
     <link rel="stylesheet" href="@Url.Content("~/Content/client_vendor/semantic/semantic.min.css")" media="screen" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/toastr.css")" media="screen" type="text/css" />
 </head>
 <body>
     <header class="header clearfix">
@@ -36,7 +37,7 @@
         </button>
         <div class="main_logo" id="logo">
             @*<a href="index.html"><img src="@Url.Content("~/Content/client_img/logo.svg")" alt=""></a>
-            <a href="index.html"><img class="logo-inverse" src="images/ct_logo.svg" alt=""></a>*@
+                <a href="index.html"><img class="logo-inverse" src="images/ct_logo.svg" alt=""></a>*@
         </div>
         <div class="top-category">
             <div class="ui compact menu cate-dpdwn">
@@ -61,13 +62,13 @@
         </div>
         <div class="header_right">
             <ul>
-                
+
                 <li>
-                    <a href="shopping_cart.html" class="option_links" title="cart">
-                        <i class='uil uil-shopping-cart-alt'></i><span class="noti_count">2</span>
+                    <a href="/ShoppingCart/ShowCart" class="option_links" title="cart">
+                        <i class='uil uil-shopping-cart-alt'></i>
                     </a>
                 </li>
-                
+
                 <li class="ui dropdown">
                     <a href="#" class="opts_account" title="Account">
                         <img src="images/hd_dp.jpg" alt="">
@@ -75,7 +76,7 @@
                     <div class="menu dropdown_account">
                         <div class="channel_my">
                             <div class="profile_link">
-                                <img src="images/hd_dp.jpg" alt="">
+                                <img src="~/Content/client_img/hd_dp.jpg" alt="">
                                 <div class="pd_content">
                                     <div class="rhte85">
                                         <h6>Joginder Singh</h6>
@@ -116,14 +117,14 @@
             <div class="left_section">
                 <ul>
                     <li class="menu--item">
-                        <a href="index.html" class="menu--link active" title="Home">
+                        <a href="/" class="menu--link active" title="Home">
                             <i class='uil uil-home-alt menu--icon'></i>
                             <span class="menu--label">Home</span>
                         </a>
                     </li>
-                    
+
                     <li class="menu--item">
-                        <a href="explore.html" class="menu--link" title="Explore">
+                        <a href="/Home/Explore" class="menu--link" title="Explore">
                             <i class='uil uil-search menu--icon'></i>
                             <span class="menu--label">Explore</span>
                         </a>
@@ -139,10 +140,8 @@
                                 <li class="sub_menu--item">
                                     <a href="#" class="sub_menu--link">@category.Name</a>
                                 </li>
-                                
+
                             }
-
-
                         </ul>
                     </li>
                 </ul>
@@ -187,7 +186,7 @@
                     <li><a href="terms_of_use.html">Terms</a></li>
                 </ul>
                 <div class="left_footer_content">
-                    <p>© 2020 <strong>Cursus</strong>. All Rights Reserved.</p>
+                    <p>© 2020 <strong>FCourse</strong>. All Rights Reserved.</p>
                 </div>
             </div>
         </div>
@@ -223,7 +222,7 @@
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-6">
                         <div class="item_f3">
-                            <a href="#" class="btn1542">Teach on Cursus</a>
+
                             <div class="lng_btn">
                                 <div class="ui language bottom right pointing dropdown floating" id="languages"
                                      data-content="Select Language">
@@ -349,7 +348,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <p>© 2020 <strong>Cursus</strong>. All Rights Reserved.</p>
+                                            <p>© 2020 <strong>FCourse</strong>. All Rights Reserved.</p>
                                         </li>
                                     </ul>
                                 </div>
@@ -371,6 +370,7 @@
             </div>
         </footer>
     </div>
+
     <script src="~/Content/client_js/vertical-responsive-menu.min.js"></script>
     <script src="~/Content/client_js/jquery-3.3.1.min.js"></script>
     <script src="~/Content/client_vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -378,5 +378,7 @@
     <script src="~/Content/client_vendor/semantic/semantic.min.js"></script>
     <script src="~/Content/client_js/custom.js"></script>
     <script src="~/Content/client_js/night-mode.js"></script>
+    <script src="~/Scripts/toastr.js"></script>
+    <script src="~/Scripts/cart.js"></script>
 </body>
 </html>

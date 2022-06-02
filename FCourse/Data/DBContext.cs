@@ -29,5 +29,7 @@ namespace FCourse.Data
             Database.SetInitializer<DBContext>(null);
             base.OnModelCreating(modelBuilder);
         }
+
+        public System.Data.Entity.DbSet<FCourse.Models.Cart> Carts { get; set; }
     }
 }
