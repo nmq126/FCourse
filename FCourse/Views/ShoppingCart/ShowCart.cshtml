@@ -114,144 +114,143 @@
                 <div class="row">
                     @if (Model != null)
                     {
-                        <div class="col-lg-8">
-                            @foreach (var item in Model.Items)
+                    <div class="col-lg-8">
+                        @foreach (var item in Model.Items)
                             {
-                                <div class="fcrse_1">
-                                    <a href="/Home/Detail/?id=@item.course.Id" class="hf_img">
-                                        <img class="cart_img" src="@item.course.Thumbnail" alt="">
-                                    </a>
-                                    <div class="hs_content">
-                                        <div class="eps_dots eps_dots10 more_dropdown">
-                                            <a href="/ShoppingCart/RemoveCart?id=@item.course.Id"><i class='uil uil-times'></i></a>
-                                        </div>
-                                        <a href="course_detail_view.html" class="crse14s title900 pt-2">@item.course.Name</a>
-                                        <a href="#" class="crse-cate">@item.course.Category.Name</a>
-                                        <div class="auth1lnkprce">
-                                            <p class="cr1fot">By <a href="#">@item.course.Teacher.Name</a></p>
-                                            <div class="prce142">$@item.course.Price</div>
-                                        </div>
-                                    </div>
+                        <div class="fcrse_1">
+                            <a href="/Home/Detail/?id=@item.course.Id" class="hf_img">
+                                <img class="cart_img" src="@item.course.Thumbnail" alt="">
+                            </a>
+                            <div class="hs_content">
+                                <div class="eps_dots eps_dots10 more_dropdown">
+                                    <a href="/ShoppingCart/RemoveCart?id=@item.course.Id"><i class='uil uil-times'></i></a>
                                 </div>
-                            }
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="membership_chk_bg rght1528">
-                                <div class="checkout_title">
-                                    <h4>Total</h4>
-                                    <img src="images/line.svg" alt="">
-                                </div>
-                                <div class="order_dt_section">
-                                    <div class="order_title">
-                                        <h4>Orignal Price</h4>
-                                        <div class="order_price">$@Model.OriginalTotal()</div>
-                                    </div>
-                                    <div class="order_title">
-                                        <h6>Discount Price</h6>
-                                        <div class="order_price">$@Model.DiscountPrice()</div>
-                                    </div>
-                                    <div class="order_title">
-                                        <h2>Total</h2>
-                                        <div class="order_price5">$@Model.Total()</div>
-                                    </div>
-
-                                    <a href="#" class="chck-btn22">Checkout Now</a>
+                                <a href="course_detail_view.html" class="crse14s title900 pt-2">@item.course.Name</a>
+                                <a href="#" class="crse-cate">@item.course.Category.Name</a>
+                                <div class="auth1lnkprce">
+                                    <p class="cr1fot">By <a href="#">@item.course.Teacher.Name</a></p>
+                                    <div class="prce142">$@item.course.Price</div>
                                 </div>
                             </div>
                         </div>
+                            }
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="membership_chk_bg rght1528">
+                            <div class="checkout_title">
+                                <h4>Total</h4>
+                                <img src="images/line.svg" alt="">
+                            </div>
+                            <div class="order_dt_section">
+                                <div class="order_title">
+                                    <h4>Orignal Price</h4>
+                                    <div class="order_price">$@Model.OriginalTotal()</div>
+                                </div>
+                                <div class="order_title">
+                                    <h6>Discount Price</h6>
+                                    <div class="order_price">$@Model.DiscountPrice()</div>
+                                </div>
+                                <div class="order_title">
+                                    <h2>Total</h2>
+                                    <div class="order_price5">$@Model.Total()</div>
+                                </div>
+
+                                <a href="#" class="chck-btn22">Checkout Now</a>
+                            </div>
+                        </div>
+                    </div>
                     }
                     else
                     {
-                        <div class="col-lg-8">
-                            <h4>
-                                You have no course in cart.
-                            </h4>
-                            <div class="back_link">
-                                <a href="/" class="hde151">Back To Shopping</a>
-                                <a href="/" class="hde152">Back</a>
-                            </div>
+                    <div class="col-lg-8">
+                        <h4>
+                            You have no course in cart.
+                        </h4>
+                        <div class="back_link">
+                            <a href="/" class="hde151">Back To Shopping</a>
+                            <a href="/" class="hde152">Back</a>
                         </div>
-                        <div class="col-lg-4">
-                            
-                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                    </div>
                     }
-                    </div>
-            <footer class="footer mt-30">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-3 col-sm-6">
-                            <div class="item_f1">
-                                <a href="about_us.html">About</a>
-                                <a href="our_blog.html">Blog</a>
-                                <a href="career.html">Careers</a>
-                                <a href="press.html">Press</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6">
-                            <div class="item_f1">
-                                <a href="help.html">Help</a>
-                                <a href="coming_soon.html">Advertise</a>
-                                <a href="coming_soon.html">Developers</a>
-                                <a href="contact_us.html">Contact Us</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6">
-                            <div class="item_f1">
-                                <a href="terms_of_use.html">Copyright Policy</a>
-                                <a href="terms_of_use.html">Terms</a>
-                                <a href="terms_of_use.html">Privacy Policy</a>
-                                <a href="sitemap.html">Sitemap</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6">
-                            <div class="item_f3">
-
-                                <div class="lng_btn">
-                                    <div class="ui language bottom right pointing dropdown floating" id="languages" data-content="Select Language">
-                                        <a href="#"><i class='uil uil-globe lft'></i>Language<i class='uil uil-angle-down rgt'></i></a>
-                                        <div class="menu">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="footer_bottm">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <ul class="fotb_left">
-                                            <li>
-                                                <a href="index.html">
-                                                    <div class="footer_logo">
-                                                        <img src="images/logo1.svg" alt="">
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <p>© 2020 <strong>FCourse</strong>. All Rights Reserved.</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="edu_social_links">
-                                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                            <a href="#"><i class="fab fa-twitter"></i></a>
-                                            <a href="#"><i class="fab fa-google-plus-g"></i></a>
-                                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                            <a href="#"><i class="fab fa-instagram"></i></a>
-                                            <a href="#"><i class="fab fa-youtube"></i></a>
-                                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-            </footer>
+                <footer class="footer mt-30">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-6">
+                                <div class="item_f1">
+                                    <a href="about_us.html">About</a>
+                                    <a href="our_blog.html">Blog</a>
+                                    <a href="career.html">Careers</a>
+                                    <a href="press.html">Press</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6">
+                                <div class="item_f1">
+                                    <a href="help.html">Help</a>
+                                    <a href="coming_soon.html">Advertise</a>
+                                    <a href="coming_soon.html">Developers</a>
+                                    <a href="contact_us.html">Contact Us</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6">
+                                <div class="item_f1">
+                                    <a href="terms_of_use.html">Copyright Policy</a>
+                                    <a href="terms_of_use.html">Terms</a>
+                                    <a href="terms_of_use.html">Privacy Policy</a>
+                                    <a href="sitemap.html">Sitemap</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6">
+                                <div class="item_f3">
+
+                                    <div class="lng_btn">
+                                        <div class="ui language bottom right pointing dropdown floating" id="languages" data-content="Select Language">
+                                            <a href="#"><i class='uil uil-globe lft'></i>Language<i class='uil uil-angle-down rgt'></i></a>
+                                            <div class="menu">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="footer_bottm">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <ul class="fotb_left">
+                                                <li>
+                                                    <a href="index.html">
+                                                        <div class="footer_logo">
+                                                            <img src="images/logo1.svg" alt="">
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <p>© 2020 <strong>FCourse</strong>. All Rights Reserved.</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="edu_social_links">
+                                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                                <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                                <a href="#"><i class="fab fa-youtube"></i></a>
+                                                <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
         </div>
     </div>
-        </div>
 
     <script src="~/Content/client_vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/Content/client_vendor/OwlCarousel/owl.carousel.js"></script>

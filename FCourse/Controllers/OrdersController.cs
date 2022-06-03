@@ -11,95 +11,89 @@ using FCourse.Models;
 
 namespace FCourse.Controllers
 {
-    public class CategoriesController : Controller
+    public class OrdersController : Controller
     {
         private DBContext db = new DBContext();
 
-        // GET: Categories
+        // GET: Orders
         public ActionResult Index()
         {
-            ViewBag.BreadCrumb = "Category List";
-
-            return View(db.Categories.OrderBy(c => c.CreatedAt).ToList());
+            var orders = db.Orders.OrderBy(o => o.CreatedAt);
+            return View(orders.ToList());
         }
 
-        // GET: Categories/Details/5
+        // GET: Orders/Details/5
         public ActionResult Details(string id)
         {
-            ViewBag.BreadCrumb = "Category detail";
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Order order = db.Orders.Find(id);
+            if (order == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(order);
         }
 
-        // GET: Categories/Create
+        // GET: Orders/Create
         public ActionResult Create()
         {
-            ViewBag.BreadCrumb = "Create Category";
-
+            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
             return View();
         }
 
-        // POST: Categories/Create
+        // POST: Orders/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Category category)
+        public ActionResult Create([Bind(Include = "Id,UserId,TotalPrice,CreatedAt,UpdatedAt,DisabledAt,Status")] Order order)
         {
             if (ModelState.IsValid)
             {
-                category.CreatedAt = category.UpdatedAt = category.DisabledAt = DateTime.Now;
-                db.Categories.Add(category);
+                db.Orders.Add(order);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(category);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", order.UserId);
+            return View(order);
         }
 
-        // GET: Categories/Edit/5
+        // GET: Orders/Edit/5
         public ActionResult Edit(string id)
         {
-            ViewBag.BreadCrumb = "Edit Category";
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Order order = db.Orders.Find(id);
+            if (order == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", order.UserId);
+            return View(order);
         }
 
-        // POST: Categories/Edit/5
+        // POST: Orders/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,CreatedAt,UpdatedAt,DisabledAt,Status")] Category category)
+        public ActionResult Edit([Bind(Include = "Id,UserId,TotalPrice,CreatedAt,UpdatedAt,DisabledAt,Status")] Order order)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
-                category.CreatedAt = category.UpdatedAt = category.DisabledAt = DateTime.Now;
+                db.Entry(order).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(category);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", order.UserId);
+            return View(order);
         }
-
 
         protected override void Dispose(bool disposing)
         {

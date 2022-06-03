@@ -1,10 +1,5 @@
 ﻿using FCourse.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Linq;
-using System.Web;
 
 namespace FCourse.Data
 {
@@ -14,6 +9,7 @@ namespace FCourse.Data
             : base("name=DBContext")
         {
         }
+
         public DbSet<Category> Categories { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Course> Courses { get; set; }
@@ -24,6 +20,7 @@ namespace FCourse.Data
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<UserCourse> UserCourses { get; set; }
         public DbSet<UserSection> UserSections { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Database.SetInitializer<DBContext>(null);
