@@ -5812,18 +5812,18 @@ a.rmv-btn i {
 	width: 100%;
 }
 
-.sign_in_up_bg:before {
-    content: "";
-    background: url(../images/sign.svg) no-repeat center;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    position: absolute;
-    pointer-events: none;
-    background-size: cover;
-    opacity: 0.04;
-}
+    .sign_in_up_bg:before {
+        content: "";
+        background: @Url.Content("~/Content/client_img/sign.svg") no-repeat center;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        position: absolute;
+        pointer-events: none;
+        background-size: cover;
+        opacity: 0.04;
+    }
 
 .sign_form {
 	background: #fff;
