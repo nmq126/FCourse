@@ -44,9 +44,19 @@
         .pagination-container .active {
             background-color: orangered;
         }
+
+    .select-box {
+        border-radius: 7px;
+    }
+
+    .fit-img {
+        width: 250px;
+        height: 120px;
+        object-fit: cover;
+    }
 </style>
 
-<div class="sa4d25">
+<div class="sa4d25" style="min-height:600px">
     <div class="container-fluid">
         <div class="row">
             <div class="col-xl-12 col-lg-8">
@@ -55,14 +65,14 @@
                         <div class="ui search focus">
                             @using (Html.BeginForm("Explore", "Home", FormMethod.Get))
                             {
-                            <div class="ui left icon input swdh11">
-                                @Html.TextBox("keyword", ViewBag.Keyword as string, new { @class = "prompt srch_explore", placeholder = "Search for Course, Tutors and more.." })
-                                <i class="uil uil-search-alt icon icon2"></i>
-                            </div>
-                            <div class="row">
-                                <select name="categoryId" id="categoryId" class="form-control mt-3 ml-3 mr-3 col-lg-3" onchange="javascript:this.form.submit()">
-                                    <option value="">Select Category</option>
-                                    @foreach (var category in ViewBag.CategoryList)
+                                <div class="ui left icon input swdh11">
+                                    @Html.TextBox("keyword", ViewBag.Keyword as string, new { @class = "prompt srch_explore", placeholder = "Search for Course, Tutors and more.." })
+                                    <i class="uil uil-search-alt icon icon2"></i>
+                                </div>
+                                <div class="row">
+                                    <select name="categoryId" id="categoryId" class="select-box form-control custom-select mt-3 ml-3 mr-3 col-lg-3" onchange="javascript:this.form.submit()">
+                                        <option value="">Select Category</option>
+                                        @foreach (var category in ViewBag.CategoryList)
                                         {
                                             if (category.Id == ViewBag.CategoryId)
                                             {
@@ -73,10 +83,10 @@
                                     <option value=@category.Id>@category.Name</option>
                                             }
                                         }
-                                </select>
-                                <select name="levelId" id="levelId" class="form-control mt-3 col-lg-3" onchange="javascript:this.form.submit()">
-                                    <option value="">Select Level</option>
-                                    @foreach (var level in ViewBag.LevelList)
+                                    </select>
+                                    <select name="levelId" id="levelId" class="select-box form-control custom-select mt-3 col-lg-3" onchange="javascript:this.form.submit()">
+                                        <option value="">Select Level</option>
+                                        @foreach (var level in ViewBag.LevelList)
                                         {
                                             if (level.Id == ViewBag.LevelID)
                                             {
@@ -99,20 +109,26 @@
                 <div class="col-md-12">
                     <div class="_14d25">
                         <div class="row">
+                            @if (Model.Count() == 0)
+                            {
+                                <p class="mt-5">
+                                    No course match your search
+                                </p>
+                            }
                             @foreach (var course in Model)
                             {
-                            <div class="col-lg-3 col-md-4">
-                                <div class="fcrse_1 mt-30">
-                                    <a href="/Home/Detail/?id=@course.Id" class="fcrse_img">
-                                        <img src="@course.Thumbnail" alt="">
-                                        <div class="course-overlay">
-                                            <div class="badge_seller">@course.Level.Name</div>
-                                            <div class="crse_reviews">
-                                                <i class="uil uil-star"></i>@course.Rating
-                                            </div>
-                                            <span class="play_btn1"><i class="uil uil-play"></i></span>
-                                            <div class="crse_timer">
-                                                @{
+                                <div class="col-lg-3 col-md-4">
+                                    <div class="fcrse_1 mt-30">
+                                        <a href="/Home/Detail/?id=@course.Id" class="fcrse_img">
+                                            <img src="@course.Thumbnail" alt="" class="fit-img">
+                                            <div class="course-overlay">
+                                                <div class="badge_seller">@course.Level.Name</div>
+                                                <div class="crse_reviews">
+                                                    <i class="uil uil-star"></i>@course.Rating
+                                                </div>
+                                                <span class="play_btn1"><i class="uil uil-play"></i></span>
+                                                <div class="crse_timer">
+                                                    @{
                                                         var courseHour = Math.Round(course.Duration / 3600);
                                                 }
                                                 @courseHour hours
