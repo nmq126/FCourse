@@ -11,9 +11,8 @@ namespace FCourse.Models
     public class Order
     {
         [Key]
-        [StringLength(10)]
         public string Id { get; set; }
-        [StringLength(10)]
+
         public string UserId { get; set; }
         public string TotalPrice { get; set; }
         public DateTime CreatedAt { get; set; }

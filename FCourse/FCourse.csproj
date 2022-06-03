@@ -173,6 +173,10 @@
     <Compile Include="Migrations\202206030801118_update-1.Designer.cs">
       <DependentUpon>202206030801118_update-1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206031738395_fix.cs" />
+    <Compile Include="Migrations\202206031738395_fix.Designer.cs">
+      <DependentUpon>202206031738395_fix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppRole.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -965,6 +969,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202206030801118_update-1.resx">
       <DependentUpon>202206030801118_update-1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206031738395_fix.resx">
+      <DependentUpon>202206031738395_fix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
