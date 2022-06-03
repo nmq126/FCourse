@@ -1,4 +1,5 @@
 ﻿using FCourse.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,16 +9,16 @@ using System.Web;
 
 namespace FCourse.Data
 {
-    public class DBContext : DbContext
+    public class DBContext : IdentityDbContext<User>
     {
         public DBContext()
             : base("name=DBContext")
         {
         }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<Level> Levels { get; set; }
+        public DbSet<Level> Levels { get; set; }    
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Section> Sections { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -26,7 +27,7 @@ namespace FCourse.Data
         public DbSet<UserSection> UserSections { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            Database.SetInitializer<DBContext>(null);
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             base.OnModelCreating(modelBuilder);
         }
 

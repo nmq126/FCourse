@@ -77,20 +77,6 @@ namespace FCourse.Controllers
             return View(courses.OrderBy(s => s.CreatedAt).ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
         public ActionResult Test()
         {
             ViewBag.Message = "Your Test page.";
@@ -101,6 +87,22 @@ namespace FCourse.Controllers
         public ActionResult TestAdmin()
         {
             ViewBag.Message = "Your Test page.";
+
+            return View();
+        }
+
+        [Authorize(Roles = "USER")]
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return View();
+        }
+
+        [Authorize(Roles = "ADMIN")]
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
 
             return View();
         }
