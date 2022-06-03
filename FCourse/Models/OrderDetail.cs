@@ -12,12 +12,12 @@ namespace FCourse.Models
     {
         [Key]
         [Column(Order = 0)]
-        [StringLength(10)]
         public string OrderId { get; set; }
+
         [Key]
         [Column(Order = 1)]
-        [StringLength(10)]
         public string CourseId { get; set; }
+
         public double UnitPrice { get; set; }
         public virtual Order Order { get; set; }
         public virtual Course Course { get; set; }

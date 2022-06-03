@@ -7,6 +7,9 @@ using System.Web;
 using System.Web.Mvc;
 using PayPal.Api;
 using Order = FCourse.Models.Order;
+using Microsoft.AspNet.Identity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace FCourse.Controllers
 {
@@ -195,7 +198,7 @@ namespace FCourse.Controllers
             var order = new Order()
             {
                 Id = String.Concat("ORD_", Guid.NewGuid().ToString("N").Substring(0, 5)),
-                UserId = "1",
+                UserId = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()),
                 TotalPrice = Convert.ToString(listCarts.Items.Sum(s => s.course.Price * (1 - s.course.Discount / 100)).ToString()),
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
@@ -203,7 +206,27 @@ namespace FCourse.Controllers
                 Status = 1
             };
             db.Orders.Add(order);
-            db.SaveChanges();
+            try
+            {
+                // Your code...
+                // Could also be before try if you know the exception occurs in SaveChanges
+
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
 
             //Add order details
             foreach (var cart in listCarts.Items)
