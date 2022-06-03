@@ -194,7 +194,7 @@ namespace FCourse.Controllers
             Cart listCarts = Session["Cart"] as Cart;
             var order = new Order()
             {
-                Id = Convert.ToString((new Random()).Next(100000)),
+                Id = String.Concat("ORD_", Guid.NewGuid().ToString("N").Substring(0, 5)),
                 UserId = "1",
                 TotalPrice = Convert.ToString(listCarts.Items.Sum(s => s.course.Price * (1 - s.course.Discount / 100)).ToString()),
                 CreatedAt = DateTime.Now,
