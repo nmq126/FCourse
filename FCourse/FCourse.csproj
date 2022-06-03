@@ -885,6 +885,7 @@
     <Content Include="Views\Home\Detail.cshtml" />
     <Content Include="Views\Home\Explore.cshtml" />
     <Content Include="Views\ShoppingCart\ShowCart.cshtml" />
+    <Content Include="Views\Home\Learning.cshtml" />
     <Content Include="Views\Home\ThankYou.cshtml" />
     <Content Include="Views\Home\Error_404.cshtml" />
   </ItemGroup>

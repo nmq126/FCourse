@@ -33,6 +33,19 @@ namespace FCourse.Controllers
             return View(course);
         }
 
+        public ActionResult Learning(string id)
+        {
+            Course course = db.Courses.Find(id);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.CategoryList = from s in db.Categories select s;
+            ViewBag.SectionList = db.Sections.Where(x => x.CourseId == id);
+            ViewBag.SectionCount = db.Sections.Where(x => x.CourseId == id).Count();
+            return View(course);
+        }
+
         public ActionResult Explore(string keyword, string categoryId, string levelId, int? page)
         {
             var courses = from s in db.Courses select s;
