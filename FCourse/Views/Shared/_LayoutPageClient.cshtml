@@ -8,7 +8,7 @@
 
     <title>@ViewBag.Title</title>
 
-    @*<link rel="icon" type="image/png" href="@Url.Content("~/Content/client_img/fav.png")">*@
+    <link rel="icon" type="image/png" href="@Url.Content("~/Content/client_img/logoFavicontuche.png")">
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,500" rel='stylesheet'>
 
@@ -36,8 +36,7 @@
             <span class="collapse_menu--label"></span>
         </button>
         <div class="main_logo" id="logo">
-            @*<a href="index.html"><img src="@Url.Content("~/Content/client_img/logo.svg")" alt=""></a>
-                <a href="index.html"><img class="logo-inverse" src="images/ct_logo.svg" alt=""></a>*@
+            <a href="/Home"><img src="@Url.Content("~/Content/client_img/logoTuche2.png")" alt="" width="140" height="46"></a>
         </div>
         <div class="top-category">
             <div class="ui compact menu cate-dpdwn">
@@ -46,7 +45,7 @@
                     <div class="menu dropdown_category5">
                         @foreach (var category in ViewBag.CategoryList)
                         {
-                        <a href="#" class="item channel_item">@category.Name</a>
+                            <a href="/Home/Explore?keyword=&categoryId=@category.Id&levelId=" class="item channel_item">@category.Name</a>
                         }
                     </div>
                 </div>
@@ -162,7 +161,7 @@
                             @foreach (var category in ViewBag.CategoryList)
                             {
                                 <li class="sub_menu--item">
-                                    <a href="#" class="sub_menu--link">@category.Name</a>
+                                    <a href="/Home/Explore?keyword=&categoryId=@category.Id&levelId=" class="sub_menu--link">@category.Name</a>
                                 </li>
 
                             }
@@ -376,9 +375,7 @@
                                     <ul class="fotb_left">
                                         <li>
                                             <a href="index.html">
-                                                <div class="footer_logo">
-                                                    <img src="images/logo1.svg" alt="">
-                                                </div>
+                                                <img src="@Url.Content("~/Content/client_img/logoFavicontuche.png")" width="32" height="32" alt="">
                                             </a>
                                         </li>
                                         <li>
@@ -415,5 +412,8 @@
     <script src="~/Scripts/toastr.js"></script>
     <script src="~/Scripts/cart.js"></script>
     @RenderSection("scripts", required: false)
+    <script>
+        toastr.options.positionClass = 'toast-bottom-left';
+    </script>
 </body>
 </html>

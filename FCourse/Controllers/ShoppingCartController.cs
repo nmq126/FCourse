@@ -150,47 +150,49 @@ namespace FCourse.Controllers
         //Payment with paypal
         public ActionResult PaymentWithPaypal()
         {
-            APIContext apiContext = PaypalConfiguration.GetAPIContext();
-            try
+            if (User.Identity.IsAuthenticated)
             {
-                string payerId = Request.Params["PayerID"];
-                if (string.IsNullOrEmpty(payerId))
+                APIContext apiContext = PaypalConfiguration.GetAPIContext();
+                try
                 {
-                    string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/ShoppingCart/PaymentWithPaypal?";
-                    var guid = Convert.ToString((new Random()).Next(100000));
-                    var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid);
-                    var links = createdPayment.links.GetEnumerator();
-                    string paypalRedirectUrl = string.Empty;
-
-                    while (links.MoveNext())
+                    string payerId = Request.Params["PayerID"];
+                    if (string.IsNullOrEmpty(payerId))
                     {
-                        Links link = links.Current;
-                        if (link.rel.ToLower().Trim().Equals("approval_url"))
+                        string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/ShoppingCart/PaymentWithPaypal?";
+                        var guid = Convert.ToString((new Random()).Next(100000));
+                        var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid);
+                        var links = createdPayment.links.GetEnumerator();
+                        string paypalRedirectUrl = string.Empty;
+
+                        while (links.MoveNext())
                         {
-                            paypalRedirectUrl = link.href;
+                            Links link = links.Current;
+                            if (link.rel.ToLower().Trim().Equals("approval_url"))
+                            {
+                                paypalRedirectUrl = link.href;
+                            }
+                        }
+
+                        Session.Add(guid, createdPayment.id);
+                        return Redirect(paypalRedirectUrl);
+                    }
+                    else
+                    {
+                        var guid = Request.Params["guid"];
+                        var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
+                        if (executedPayment.state.ToLower() != "approved")
+                        {
+                            Session.Remove("Cart");
+                            return View("~/Views/Home/Error_404.cshtml");
                         }
                     }
-
-                    Session.Add(guid, createdPayment.id);
-                    return Redirect(paypalRedirectUrl);
                 }
-                else
+                catch (Exception e)
                 {
-                    var guid = Request.Params["guid"];
-                    var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
-                    if (executedPayment.state.ToLower() != "approved")
-                    {
-                        Session.Remove("Cart");
-                        return View("~/Views/Home/Error_404.cshtml");
-                    }
+                    PaypalLogger.Log("Error: " + e.Message);
+                    Session.Remove("Cart");
+                    return View("~/Views/Home/Error_404.cshtml");
                 }
-            }
-            catch (Exception e)
-            {
-                PaypalLogger.Log("Error: " + e.Message);
-                Session.Remove("Cart");
-                return View("~/Views/Home/Error_404.cshtml");
-            }
 
             //Add new order
             var listItems = new ItemList() { items = new List<Item>() };
@@ -285,8 +287,14 @@ namespace FCourse.Controllers
                 }
             }
 
-            Session.Remove("Cart");
-            return View("~/Views/Home/ThankYou.cshtml");
+                Session.Remove("Cart");
+                return View("~/Views/Home/ThankYou.cshtml");
+            }
+            else
+            {
+                TempData["data"] = "You must login before payment.";
+                return RedirectToAction("Login", "User");
+            }
         }
     }
 }

@@ -7,13 +7,13 @@ namespace FCourse.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class update1 : IMigrationMetadata
+    public sealed partial class UpdateDatabase1 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(update1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateDatabase1));
         
         string IMigrationMetadata.Id
         {
-            get { return "202206030801118_update-1"; }
+            get { return "202206040423380_UpdateDatabase1"; }
         }
         
         string IMigrationMetadata.Source
