@@ -1,0 +1,106 @@
+﻿@model FCourse.Models.User
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<div class="col-xl-12">
+    <div class="widget has-shadow">
+        <div class="widget-header bordered no-actions d-flex align-items-center">
+            <h4>User: @Html.DisplayFor(model => model.UserName)</h4>
+        </div>
+        <div class="widget-body">
+
+            <form class="form-horizontal">
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Id</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.Id)">
+                    </div>
+                </div>
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Username</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.UserName)">
+                    </div>
+                </div>
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">FirstName</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.FirstName)">
+                    </div>
+                </div>
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Last Name</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.LastName)">
+                    </div>
+                </div>
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Phone Number</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.PhoneNumber)">
+                    </div>
+                </div>
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Email</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.Email)">
+                    </div>
+                </div>
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Description</label>
+                    <div class="col-lg-6">
+                        <textarea class="form-control" rows="3" disabled>@Html.DisplayFor(model => model.Description)
+                        </textarea>
+                    </div>
+                </div>
+
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Status</label>
+                    <div class="col-lg-6">
+                        @{
+                            string status = null;
+                            switch (Model.Status)
+                            {
+                                case 1:
+                                    status = "Acitve";
+                                    break;
+                                case 0:
+                                    status = "Disable";
+                                    break;
+                            }
+                            <input type="text" class="form-control" disabled value="@status">
+                        }
+
+                    </div>
+                </div>
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Created At</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.CreatedAt)">
+                    </div>
+                </div>
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Updated At</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.UpdatedAt)">
+                    </div>
+                </div>
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Disabled At</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" disabled value="@Model.DisabledAt">
+                    </div>
+                </div>
+            </form>
+            <div class="em-separator separator-dashed"></div>
+            <div class="text-right">
+                <button class="btn btn-outline-dark" type="button">@Html.ActionLink("Edit", "Edit", new { id = Model.Id })</button>
+                <button class="btn btn-light" type="button">@Html.ActionLink("Back to List", "Index")</button>
+            </div>
+        </div>
+        
+    </div>
+</div>

@@ -12,11 +12,9 @@ namespace FCourse.Models
     {
         [Key]
         [Column(Order = 0)]
-        [StringLength(10)]
         public string UserId { get; set; }
         [Key]
         [Column(Order = 1)]
-        [StringLength(10)]
         public string CourseId { get; set; }
         public string Grade { get; set; }
         public bool IsFinished { get; set; }

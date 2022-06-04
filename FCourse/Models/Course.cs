@@ -47,5 +47,7 @@ namespace FCourse.Models
         public virtual Level Level { get; set; }
         public virtual Teacher Teacher { get; set; }
         public ICollection<Section> Sections { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
+
     }
 }

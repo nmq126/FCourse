@@ -62,6 +62,30 @@
         </div>
         <div class="header_right">
             <ul>
+                @if (ViewBag.UserId != null)
+                {
+
+
+                    <li>
+                        <a href="/User/LogOut" class="option_links" title="log-out">
+                            <i class='uil uil-sign-out-alt'></i>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a href="/User/Login" class="option_links" title="log-in">
+                            <i class='uil uil-sign-in-alt'></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/User/Register" class="option_links" title="register">
+                            <i class='uil uil-registered'></i>
+                        </a>
+                    </li>
+                }
+
 
                 <li>
                     <a href="/ShoppingCart/ShowCart" class="option_links" title="cart">
@@ -137,14 +161,24 @@
                         <ul class="sub_menu">
                             @foreach (var category in ViewBag.CategoryList)
                             {
-                            <li class="sub_menu--item">
-                                <a href="#" class="sub_menu--link">@category.Name</a>
-                            </li>
+                                <li class="sub_menu--item">
+                                    <a href="#" class="sub_menu--link">@category.Name</a>
+                                </li>
 
                             }
                         </ul>
                     </li>
-                </ul>
+                    @if (ViewBag.UserId != null)
+                    { 
+                <li class="menu--item">
+                    <a href="/Home/UserProfile" class="menu--link" title="Explore">
+                        <i class='uil uil-heart-alt menu--icon'></i>
+                        <span class="menu--label">My Courses</span>
+                    </a>
+                </li>
+                    }
+                        
+                    </ul>
             </div>
             <div class="left_section pt-2">
                 <ul>

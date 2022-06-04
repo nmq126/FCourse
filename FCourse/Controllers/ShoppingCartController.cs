@@ -195,10 +195,11 @@ namespace FCourse.Controllers
             //Add new order
             var listItems = new ItemList() { items = new List<Item>() };
             Cart listCarts = Session["Cart"] as Cart;
+            string userId = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId());
             var order = new Order()
             {
                 Id = String.Concat("ORD_", Guid.NewGuid().ToString("N").Substring(0, 5)),
-                UserId = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()),
+                UserId = userId,
                 TotalPrice = Convert.ToString(listCarts.Items.Sum(s => s.course.Price * (1 - s.course.Discount / 100)).ToString()),
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
@@ -229,6 +230,7 @@ namespace FCourse.Controllers
             }
 
             //Add order details
+            
             foreach (var cart in listCarts.Items)
             {
                 OrderDetail orderDetail = new OrderDetail()
@@ -237,8 +239,50 @@ namespace FCourse.Controllers
                     CourseId = cart.course.Id,
                     UnitPrice = cart.course.Price
                 };
+                UserCourse userCourse = new UserCourse()
+                {
+                    CourseId = cart.course.Id,
+                    UserId = userId,
+                    Grade = null,
+                    IsFinished = false
+                };
+                List<Section> sections = db.Sections.Where(s => s.CourseId == cart.course.Id).ToList();
+                foreach (var section in sections)
+                {
+                    UserSection userSection = new UserSection()
+                    {
+                        UserId = userId,
+                        SectionId = section.Id,
+                        PausedAt = 0,
+                        IsFinished = false
+                    };
+                    db.UserSections.Add(userSection);
+                }
+
                 db.OrderDetails.Add(orderDetail);
-                db.SaveChanges();
+                db.UserCourses.Add(userCourse);
+
+                try
+                {
+                    // Your code...
+                    // Could also be before try if you know the exception occurs in SaveChanges
+
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    throw;
+                }
             }
 
             Session.Remove("Cart");

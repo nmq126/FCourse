@@ -216,13 +216,15 @@
             </div>
             <div class="col-xl-3 col-lg-4">
                 <div class="right_side">
+                    @if (ViewBag.UserId != null)
+                    {
                     <div class="fcrse_2 mb-30">
                         <div class="tutor_img">
                             <a href="my_instructor_profile_view.html"><img src="~/Content/client_img/left-imgs/img-10.jpg" alt=""></a>
                         </div>
                         <div class="tutor_content_dt">
                             <div class="tutor150">
-                                <a href="my_instructor_profile_view.html" class="tutor_name">User</a>
+                                <a href="my_instructor_profile_view.html" class="tutor_name">@ViewBag.UserName</a>
                                 <div class="mef78" title="Verify">
                                     <i class="uil uil-check-circle"></i>
                                 </div>
@@ -236,9 +238,12 @@
                             </ul>
                             <div class="tut1250">
                             </div>
-                            <a href="my_instructor_profile_view.html" class="prfle12link">Go To Profile</a>
+                            <a href="/Home/UserProfile" class="prfle12link">Go To Profile</a>
                         </div>
                     </div>
+                    }
+
+                        
 
                     <div class="fcrse_3">
                         <div class="cater_ttle">

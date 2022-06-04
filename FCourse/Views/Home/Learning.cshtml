@@ -54,12 +54,13 @@
                                     <a href="#" class="pp-2 d-flex">
                                         @if (item.Type == 0)
                                         {
-                                            string id = item.Content;
+                                            string idVideo = item.Content;
                                             string name = item.Name;
+                                            string idSection = item.Id;
                                             <span class="lecture-status-icon pr-1">
                                                 <i class="uil uil-play-circle icon_142"></i>
                                             </span>
-                                            <div id=@id data-name="@name" class="title-container pl-2 flex-grow-1 d-flex" onclick="playSectionVideo(this)">
+                                            <div id=@idVideo data-name="@name" data-id="@idSection" class="title-container pl-2 flex-grow-1 d-flex" onclick="playSectionVideo(this)">
                                                 <span class="lecture-name flex-grow-1">
                                                     @{
                                                         TimeSpan time = TimeSpan.FromSeconds(item.Duration);
@@ -88,20 +89,23 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="lecture-container">
+        <div class="lecture-container">
 
-        <h2 class="lecture-title mb-4" id="lecture-title"></h2>
+            <h2 class="lecture-title mb-4" id="lecture-title"></h2>
 
-        <div class="lecture-content-inner mt-35">
-            <div class="lecture-content-inner-video">
-                <div class="video-responsive">
-                    <iframe id="existing-iframe" src="https://www.youtube.com/embed/9V-7NXgC3Xs?enablejsapi=1" class="lec-responsive-width"></iframe>
+            <div class="lecture-content-inner mt-35">
+                <div class="lecture-content-inner-video">
+                    <div class="video-responsive">
+                        <div id="existing-iframe">
+
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+    
 
     <script src="~/Content/client_vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/Content/client_vendor/OwlCarousel/owl.carousel.js"></script>
@@ -111,6 +115,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script type="text/javascript">
+        var currentPlaySection = "";
+        var userId = '@ViewBag.UserId'
+
+        console.log(userId)
         var tag = document.createElement('script');
         tag.id = 'iframe-demo';
         tag.src = 'https://www.youtube.com/iframe_api';
@@ -120,6 +128,7 @@
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('existing-iframe', {
                 playerVars: {
+                    'playsinline': 1,
                     'enablejsapi': 1
                 },
                 events: {
@@ -139,35 +148,66 @@
                 console.log("vid unstarted: " + player.getCurrentTime())
             }
             if (event.data == YT.PlayerState.CUED && !done) {
-                console.log("vid cued")
             }
             if (event.data == YT.PlayerState.BUFFERING && !done) {
-                console.log("vid buffering")
             }
             if (event.data == YT.PlayerState.PLAYING && !done) {
-                $("#hehe").html("play at " + player.getCurrentTime())
                 console.log("vid play tai: " + player.getCurrentTime())
             }
             if (event.data == YT.PlayerState.PAUSED && !done) {
-                $("#hehe").html("pause at " + player.getCurrentTime())
                 console.log("vid pause tai: " + player.getCurrentTime())
+                pauseSectionVideo(player.getCurrentTime())
             }
             if (event.data == YT.PlayerState.ENDED && !done) {
                 console.log("vid end tai: " + player.getCurrentTime())
-                loadVideoById()
-
+                endSectionVideo()
             }
         }
         function loadVideoById(id, startAt) {
-            // load ra nhung chua chay, start o giay 40
             player.cueVideoById(id, startAt);
         }
 
-        function playSectionVideo(vid) {
-            var id = vid.id;
-            var name = vid.getAttribute("data-name");
+        function endSectionVideo() {
+            $.ajax({
+                type: "Get",
+                url: "/Home/EndUserSection",
+                data: {
+                    userId: userId,
+                    sectionId: currentPlaySection
+                }
+            });
+        }
+
+        function pauseSectionVideo(pausedAt) {
+            $.ajax({
+                type: "Get",
+                url: "/Home/UpdateUserSection",
+                data: {
+                    userId: userId,
+                    sectionId: currentPlaySection,
+                    pausedAt: pausedAt
+                }
+            });
+        }
+
+        function playSectionVideo(obj) {
+            var id = obj.id;
+            var name = obj.getAttribute("data-name");
+            var idSection = obj.getAttribute("data-id");
+            currentPlaySection = idSection;
             document.getElementById("lecture-title").innerHTML = "Section: " + name;
-            loadVideoById(id, 1);
+            $.ajax({
+                type: "Get",
+                url: "/Home/GetUserSection",
+                data: {
+                    userId: userId,
+                    sectionId: currentPlaySection
+                },
+                success: function (pausedAt) {
+                    loadVideoById(id, pausedAt);
+                }
+            });
+
         }
     </script>
 </body>

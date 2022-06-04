@@ -105,9 +105,9 @@
                 new UserCourse() { UserId = "2", CourseId = "2", Grade = "50", IsFinished = true }
                 );
             context.UserSections.AddOrUpdate(x => new { x.UserId, x.SectionId },
-                new UserSection() { UserId = "1", SectionId = "1", PausedAt = "550", IsFinished = true },
-                new UserSection() { UserId = "1", SectionId = "2", PausedAt = "860", IsFinished = true },
-                new UserSection() { UserId = "1", SectionId = "3", PausedAt = "550", IsFinished = false }
+                new UserSection() { UserId = "1", SectionId = "1", PausedAt = 550, IsFinished = true },
+                new UserSection() { UserId = "1", SectionId = "2", PausedAt = 860, IsFinished = true },
+                new UserSection() { UserId = "1", SectionId = "3", PausedAt = 550, IsFinished = false }
                 );
             //context.Roles.AddOrUpdate(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole()
             //{

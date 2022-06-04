@@ -132,9 +132,9 @@ namespace FCourse.Controllers
                 {
                     SignInManager<User, string> signInManager = new SignInManager<User, string>(userManager, Request.GetOwinContext().Authentication);
                     await signInManager.SignInAsync(user, false, false);
+
                     return Redirect("/Home");
                 }
-                    
             }
            
             return RedirectToAction("Login");

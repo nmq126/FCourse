@@ -29,7 +29,8 @@ namespace FCourse.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
+            Order order = db.Orders.Include(c => c.OrderDetails).FirstOrDefault(c => c.Id == id);
+            //Order order = db.Orders.Find(id);
             if (order == null)
             {
                 return HttpNotFound();
@@ -38,10 +39,16 @@ namespace FCourse.Controllers
         }
 
         // GET: Orders/Create
-        public ActionResult Create()
+        public String UpdateStatus(int status, string id)
         {
-            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
-            return View();
+            Order order = db.Orders.Find(id);
+            if (order == null)
+            {
+                return "Error";
+            }
+            order.Status = status;
+            db.SaveChanges();
+            return "Order "+ id + " change status succesfully";
         }
 
         // POST: Orders/Create

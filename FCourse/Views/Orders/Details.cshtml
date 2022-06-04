@@ -5,57 +5,180 @@
     Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
 }
 
-<h2>Details</h2>
+<div class="col-xl-12">
+    <div class="widget has-shadow">
+        <div class="widget-header bordered no-actions d-flex align-items-center">
+            <h4>Order @Html.DisplayFor(model => model.Id)</h4>
+        </div>
+        <div class="widget-body">
+            <div class="col-10 ml-auto">
+                <div class="section-title mt-3 mb-5">
+                    <h4>01. General Informations</h4>
+                </div>
+            </div>
+            <form class="form-horizontal">
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Id</label>
+                    <div class="col-lg-6">
+                        <input type="text" id="orderId" class="form-control" disabled value="@Html.DisplayFor(model => model.Id)">
+                    </div>
+                </div>
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Total Price</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.TotalPrice)">
+                    </div>
+                </div>
+                @*<div class="form-group row d-flex align-items-center mb-5">
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">User Id</label>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.User.Id)">
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center mb-5">
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Username</label>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.User.UserName)">
+                        </div>
+                    </div>
 
-<div>
-    <h4>Order</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        
+                    <div class="form-group row d-flex align-items-center mb-5">
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">User Fullname</label>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" disabled value="@Model.User.FirstName @Model.User.LastName">
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center mb-5">
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Email</label>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.User.Email)">
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center mb-5">
+                        <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Phone</label>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.User.PhoneNumber)">
+                        </div>
+                    </div>*@
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalPrice)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TotalPrice)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DisabledAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DisabledAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-    </dl>
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Status</label>
+                    <div class="col-lg-6 select">
+                        <select id="Status" name="Status" class="custom-select form-control" onselect="">
+                            <option value="1" @(Model.Status == 1 ? "selected" : "")>Done</option>
+                            <option value="0" @(Model.Status == 0 ? "selected" : "")>Pending</option>
+                        </select>
+                        @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control", style = "display:none" } })
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Created At</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.CreatedAt)">
+                    </div>
+                </div>
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Updated At</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.UpdatedAt)">
+                    </div>
+                </div>
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Disabled At</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" disabled value="@Model.DisabledAt">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div class="col-xl-12">
+    <div class="widget has-shadow">
+        <div class="widget-body">
+            <div class="col-10 ml-auto">
+                <div class="section-title mt-3 mb-5">
+                    <h4>02. Order detail</h4>
+                </div>
+            </div>
+            @if (Model.OrderDetails == null || Model.OrderDetails.Count() == 0)
+            {
+                <p class="col-10 ml-auto">No Order Detail found!</p>
+            }
+            else
+            {
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Order Id</th>
+                            <th>Course Id</th>
+                            <th>Course Name</th>
+                            <th>Unit Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var detail in Model.OrderDetails.ToList())
+                        {
+                            <tr>
+                                <td><span class="text-primary">@Html.Raw(detail.OrderId)</span></td>
+                                <td>@Html.Raw(detail.CourseId)</td>
+                                <td>@Html.Raw(detail.Course.Name)</td>
+                                <td>@Html.Raw(detail.UnitPrice)</td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+
+            }
+
+
+            <div class="em-separator separator-dashed"></div>
+            <div class="text-right">
+                <button class="btn btn-outline-dark" type="button">@Html.ActionLink("Edit", "Edit", new { id = Model.Id })</button>
+                <button class="btn btn-light" type="button">@Html.ActionLink("Back to List", "Index")</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/toastr.js"></script>
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    </script>
+    <script>
+        var id = $('#orderId').val();
+        $('#Status').on('change', function () {
+            status = this.value
+            $.ajax({
+                type: "GET",
+                url: "/Orders/UpdateStatus",
+                data: {
+                    id: id,
+                    status: status
+                },
+                success: function (msg) {
+                    toastr.info(msg, 'Notification');
+                }
+            });
+        });
+
+    </script>
+}

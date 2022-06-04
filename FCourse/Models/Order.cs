@@ -20,5 +20,7 @@ namespace FCourse.Models
         public DateTime DisabledAt { get; set; }
         public int Status { get; set; }
         public virtual User User { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
+
     }
 }

@@ -1,0 +1,171 @@
+﻿@model FCourse.Models.User
+
+@{
+    ViewBag.Title = "UserProfile";
+    Layout = "~/Views/Shared/_LayoutPageClient.cshtml";
+}
+
+    <div class="_216b01">
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="col-md-10">
+                    <div class="section3125 rpt145">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                
+                                <div class="dp_dt150">
+                                    <div class="img148">
+                                        <img src="https://res.cloudinary.com/nmqdec6/image/upload/v1654323387/444_v2mbh2.png" width="100%" alt="">
+                                    </div>
+                                    <div class="prfledt1">
+                                        <h2>@Model.LastName @Model.LastName</h2>
+                                        <span>@Model.UserName</span>
+                                    </div>
+                                </div>
+                                <ul class="_ttl120">
+                                    <li>
+                                        <div class="_ttl121">
+                                            <div class="_ttl122">Courses Enroll</div>
+
+                                            @if (Model.UserCourses == null || Model.UserCourses.Count() == 0)
+                                            {
+                                                <div class="_ttl123">0</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="_ttl123">@Model.UserCourses.Count()</div>
+                                             }
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="_ttl121">
+                                            <div class="_ttl122">Courses Finished</div>
+                                            <div class="_ttl123">0</div>
+                                        </div>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="rgt-145">
+                                    <ul class="tutor_social_links">
+                                        <li><a href="#" class="fb"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li><a href="#" class="tw"><i class="fab fa-twitter"></i></a></li>
+                                        <li><a href="#" class="ln"><i class="fab fa-linkedin-in"></i></a></li>
+                                        <li><a href="#" class="yu"><i class="fab fa-youtube"></i></a></li>
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="_215b15">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="course_tabs">
+                        <nav>
+                            <div class="nav nav-tabs tab_crse" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-about-tab" data-toggle="tab"
+                                   href="#nav-about" role="tab" aria-selected="true">About</a>
+                                <a class="nav-item nav-link" id="nav-courses-tab" data-toggle="tab" href="#nav-courses"
+                                   role="tab" aria-selected="false">Courses</a>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="_215b17">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="course_tab_content">
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-about" role="tabpanel">
+                                <div class="_htg451">
+                                    <div class="_htg452">
+                                        <h3>About Me</h3>
+                                        <p>
+                                            @Html.Raw(Model.Description)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="nav-courses" role="tabpanel">
+                                <div class="crse_content">
+                                    <h3>My courses</h3>
+                                    <div class="_14d25">
+                                        @if (Model.UserCourses == null || Model.UserCourses.Count() == 0)
+                                        {
+                                        <div>You have no course yet. Go purchase some <a href="@Url.Action("Index", "Home")">here</a></div>
+                                        }
+                                        else
+                                        {
+                                    <div class="row">
+                                        @foreach (var course in ViewBag.Courses)
+                                        {
+                                            <div class="col-lg-3 col-md-4">
+                                                <div class="fcrse_1 mt-30">
+                                                    <a href="/Home/Learning/?id=@course.Id" class="fcrse_img">
+                                                        <img src="@course.Thumbnail" alt="" class="fit-img">
+                                                        <div class="course-overlay">
+                                                            <div class="badge_seller">@course.Level.Name</div>
+                                                            <div class="crse_reviews">
+                                                                <i class="uil uil-star"></i>@course.Rating
+                                                            </div>
+                                                            <span class="play_btn1"><i class="uil uil-play"></i></span>
+                                                            <div class="crse_timer">
+                                                                @{
+                                                                    var courseHour = Math.Round(course.Duration / 3600);
+                                                                }
+                                                                @courseHour hours
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <div class="fcrse_content">
+                                                        <div class="eps_dots more_dropdown">
+                                                            <a href="#"><i class="uil uil-ellipsis-v"></i></a>
+                                                            <div class="dropdown-content">
+                                                                <span><i class='uil uil-share-alt'></i>Share</span>
+                                                                <span><i class="uil uil-heart"></i>Save</span>
+                                                                <span><i class='uil uil-ban'></i>Not Interested</span>
+                                                                <span><i class="uil uil-windsock"></i>Report</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="vdtodt">
+                                                        </div>
+                                                        <a href="course_detail_view.html" class="crse14s">@course.Name</a>
+                                                        <a href="#" class="crse-cate">@course.Category.Name</a>
+                                                        <div class="auth1lnkprce">
+                                                            <p class="cr1fot">By <a href="#">@course.Teacher.Name</a></p>
+                                                            <div class="prce142">$@course.Price</div>
+                                                            <a href="#" class="shrt-cart-btn addToCart " title="cart" data-id="@course.Id">
+                                                                <i class="uil uil-shopping-cart-alt">
+                                                                </i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+

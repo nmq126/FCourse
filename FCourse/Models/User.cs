@@ -37,6 +37,8 @@ namespace FCourse.Models
         public DateTime DisabledAt { get; set; }
         public int Status { get; set; }
         public ICollection<Order> Orders { get; set; }
+        public ICollection<UserCourse> UserCourses { get; set; }
+        public ICollection<UserSection> UserSections { get; set; }
 
     }
 }
