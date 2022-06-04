@@ -176,9 +176,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202206030801118_update-1.cs" />
-    <Compile Include="Migrations\202206030801118_update-1.Designer.cs">
-      <DependentUpon>202206030801118_update-1.cs</DependentUpon>
+    <Compile Include="Migrations\202206040423380_UpdateDatabase1.cs" />
+    <Compile Include="Migrations\202206040423380_UpdateDatabase1.Designer.cs">
+      <DependentUpon>202206040423380_UpdateDatabase1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppRole.cs" />
@@ -576,6 +576,8 @@
     <Content Include="Content\client_img\logo.svg" />
     <Content Include="Content\client_img\logo1.svg" />
     <Content Include="Content\client_img\logoDen.png" />
+    <Content Include="Content\client_img\logoFavicontuche.png" />
+    <Content Include="Content\client_img\logoTuche2.png" />
     <Content Include="Content\client_img\membership\icon-1.svg" />
     <Content Include="Content\client_img\membership\icon-2.svg" />
     <Content Include="Content\client_img\membership\pyicon-1.svg" />
@@ -934,8 +936,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202206030801118_update-1.resx">
-      <DependentUpon>202206030801118_update-1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202206040423380_UpdateDatabase1.resx">
+      <DependentUpon>202206040423380_UpdateDatabase1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

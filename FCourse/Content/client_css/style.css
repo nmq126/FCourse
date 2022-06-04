@@ -5814,7 +5814,7 @@ a.rmv-btn i {
 
     .sign_in_up_bg:before {
         content: "";
-        background: @Url.Content("~/Content/client_img/sign.svg") no-repeat center;
+        background: url("https://gambolthemes.net/html-items/cursus_main_demo/images/sign.svg") no-repeat center;
         left: 0;
         right: 0;
         top: 0;
