@@ -150,99 +150,103 @@ namespace FCourse.Controllers
         //Payment with paypal
         public ActionResult PaymentWithPaypal()
         {
-            APIContext apiContext = PaypalConfiguration.GetAPIContext();
-            try
+            if (User.Identity.IsAuthenticated)
             {
-                string payerId = Request.Params["PayerID"];
-                if (string.IsNullOrEmpty(payerId))
+                APIContext apiContext = PaypalConfiguration.GetAPIContext();
+                try
                 {
-                    string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/ShoppingCart/PaymentWithPaypal?";
-                    var guid = Convert.ToString((new Random()).Next(100000));
-                    var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid);
-                    var links = createdPayment.links.GetEnumerator();
-                    string paypalRedirectUrl = string.Empty;
-
-                    while (links.MoveNext())
+                    string payerId = Request.Params["PayerID"];
+                    if (string.IsNullOrEmpty(payerId))
                     {
-                        Links link = links.Current;
-                        if (link.rel.ToLower().Trim().Equals("approval_url"))
+                        string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/ShoppingCart/PaymentWithPaypal?";
+                        var guid = Convert.ToString((new Random()).Next(100000));
+                        var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid);
+                        var links = createdPayment.links.GetEnumerator();
+                        string paypalRedirectUrl = string.Empty;
+
+                        while (links.MoveNext())
                         {
-                            paypalRedirectUrl = link.href;
+                            Links link = links.Current;
+                            if (link.rel.ToLower().Trim().Equals("approval_url"))
+                            {
+                                paypalRedirectUrl = link.href;
+                            }
+                        }
+
+                        Session.Add(guid, createdPayment.id);
+                        return Redirect(paypalRedirectUrl);
+                    }
+                    else
+                    {
+                        var guid = Request.Params["guid"];
+                        var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
+                        if (executedPayment.state.ToLower() != "approved")
+                        {
+                            Session.Remove("Cart");
+                            return View("~/Views/Home/Error_404.cshtml");
                         }
                     }
-
-                    Session.Add(guid, createdPayment.id);
-                    return Redirect(paypalRedirectUrl);
                 }
-                else
+                catch (Exception e)
                 {
-                    var guid = Request.Params["guid"];
-                    var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
-                    if (executedPayment.state.ToLower() != "approved")
-                    {
-                        Session.Remove("Cart");
-                        return View("~/Views/Home/Error_404.cshtml");
-                    }
+                    PaypalLogger.Log("Error: " + e.Message);
+                    Session.Remove("Cart");
+                    return View("~/Views/Home/Error_404.cshtml");
                 }
-            }
-            catch (Exception e)
-            {
-                PaypalLogger.Log("Error: " + e.Message);
-                Session.Remove("Cart");
-                return View("~/Views/Home/Error_404.cshtml");
-            }
 
-            //Add new order
-            var listItems = new ItemList() { items = new List<Item>() };
-            Cart listCarts = Session["Cart"] as Cart;
-            var order = new Order()
-            {
-                Id = String.Concat("ORD_", Guid.NewGuid().ToString("N").Substring(0, 5)),
-                UserId = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()),
-                TotalPrice = Convert.ToString(listCarts.Items.Sum(s => s.course.Price * (1 - s.course.Discount / 100)).ToString()),
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now,
-                DisabledAt = DateTime.Now,
-                Status = 1
-            };
-            db.Orders.Add(order);
-            try
-            {
-                // Your code...
-                // Could also be before try if you know the exception occurs in SaveChanges
-
-                db.SaveChanges();
-            }
-            catch (DbEntityValidationException e)
-            {
-                foreach (var eve in e.EntityValidationErrors)
+                //Add new order
+                var listItems = new ItemList() { items = new List<Item>() };
+                Cart listCarts = Session["Cart"] as Cart;
+                var order = new Order()
                 {
-                    Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                            ve.PropertyName, ve.ErrorMessage);
-                    }
-                }
-                throw;
-            }
-
-            //Add order details
-            foreach (var cart in listCarts.Items)
-            {
-                OrderDetail orderDetail = new OrderDetail()
-                {
-                    OrderId = order.Id,
-                    CourseId = cart.course.Id,
-                    UnitPrice = cart.course.Price
+                    Id = String.Concat("ORD_", Guid.NewGuid().ToString("N").Substring(0, 5)),
+                    UserId = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()),
+                    TotalPrice = Convert.ToString(listCarts.Items.Sum(s => s.course.Price * (1 - s.course.Discount / 100)).ToString()),
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                    DisabledAt = DateTime.Now,
+                    Status = 1
                 };
-                db.OrderDetails.Add(orderDetail);
-                db.SaveChanges();
-            }
+                db.Orders.Add(order);
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    throw;
+                }
 
-            Session.Remove("Cart");
-            return View("~/Views/Home/ThankYou.cshtml");
+                //Add order details
+                foreach (var cart in listCarts.Items)
+                {
+                    OrderDetail orderDetail = new OrderDetail()
+                    {
+                        OrderId = order.Id,
+                        CourseId = cart.course.Id,
+                        UnitPrice = cart.course.Price
+                    };
+                    db.OrderDetails.Add(orderDetail);
+                    db.SaveChanges();
+                }
+
+                Session.Remove("Cart");
+                return View("~/Views/Home/ThankYou.cshtml");
+            }
+            else
+            {
+                return RedirectToAction("Login", "User");
+            }
         }
     }
 }
