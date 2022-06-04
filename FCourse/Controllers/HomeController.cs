@@ -23,7 +23,7 @@ namespace FCourse.Controllers
             Course course = db.Courses.Find(id);
             if (course == null)
             {
-                return HttpNotFound();
+                return View("~/Views/Home/Error_404.cshtml");
             }
             ViewBag.CategoryList = from s in db.Categories select s;
             ViewBag.SectionList = db.Sections.Where(x => x.CourseId == id);
@@ -36,7 +36,7 @@ namespace FCourse.Controllers
             Course course = db.Courses.Find(id);
             if (course == null)
             {
-                return HttpNotFound();
+                return View("~/Views/Home/Error_404.cshtml");
             }
             ViewBag.CategoryList = from s in db.Categories select s;
             ViewBag.SectionList = db.Sections.Where(x => x.CourseId == id);
