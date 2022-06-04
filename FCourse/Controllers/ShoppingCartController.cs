@@ -245,6 +245,7 @@ namespace FCourse.Controllers
             }
             else
             {
+                TempData["data"] = "You must login before payment.";
                 return RedirectToAction("Login", "User");
             }
         }
