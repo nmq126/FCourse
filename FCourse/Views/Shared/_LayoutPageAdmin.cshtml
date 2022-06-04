@@ -119,10 +119,20 @@
                     <!-- Begin Main Navigation -->
                     <ul class="list-unstyled">
                         <li class="active">
-                            <a href="#dropdown-db" aria-expanded="true" data-toggle="collapse"><i class="la la-columns"></i><span>Course</span></a>
+                            <a href="#dropdown-db" aria-expanded="true" data-toggle="collapse"><i class="la la-book"></i><span>Course</span></a>
                             <ul id="dropdown-db" class="collapse list-unstyled show pt-0">
                                 <li><a href="@Url.Action("Index", "Courses")">Courses List</a></li>
                                 <li><a href="@Url.Action("Create", "Courses")">Create Course</a></li>
+                            </ul>
+                            <a href="#dropdown-db" aria-expanded="true" data-toggle="collapse"><i class="la la-star-half-o"></i><span>Level</span></a>
+                            <ul id="dropdown-db" class="collapse list-unstyled show pt-0">
+                                <li><a href="@Url.Action("Index", "Levels")">Level List</a></li>
+                                <li><a href="@Url.Action("Create", "Levels")">Create Level</a></li>
+                            </ul>
+                            <a href="#dropdown-db" aria-expanded="true" data-toggle="collapse"><i class="la la-file-text-o"></i><span>Level</span></a>
+                            <ul id="dropdown-db" class="collapse list-unstyled show pt-0">
+                                <li><a href="@Url.Action("Index", "Categories")">Category List</a></li>
+                                <li><a href="@Url.Action("Create", "Categories")">Create Category</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -137,11 +147,11 @@
                     <div class="row">
                         <div class="page-header">
                             <div class="d-flex align-items-center">
-                                <h2 class="page-header-title">Tên</h2>
+                                <h2 class="page-header-title">@ViewBag.BreadCrumb</h2>
                                 <div>
                                     <ul class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="db-default.html"><i class="ti ti-home"></i></a></li>
-                                        <li class="breadcrumb-item active">tên</li>
+                                        <li class="breadcrumb-item active">@ViewBag.BreadCrumb</li>
                                     </ul>
                                 </div>
                             </div>
@@ -171,6 +181,5 @@
     <script src="~/Content/admin_vendor/js/app/app.min.js"></script>
     <!-- End Page Vendor Js -->
     @RenderSection("scripts", required: false)
-
 </body>
 </html>

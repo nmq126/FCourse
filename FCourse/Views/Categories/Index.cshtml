@@ -1,0 +1,47 @@
+﻿@model IEnumerable<FCourse.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<style>
+    .row {
+        display: block !important
+    }
+</style>
+
+<div class="widget has-shadow">
+    <div class="widget-body">
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th width="15%">Id</th>
+                        <th width="50%">Name</th>
+                        <th width="35%">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><span class="text-primary">@Html.DisplayFor(modelItem => item.Id)</span></td>
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td class="td-actions">
+                                <a href="@Url.Action("Details", "Categories", new { id = item.Id })">
+                                    <i class="ion ion-information"></i>
+                                </a>
+                                <a href="@Url.Action("Edit", "Categories", new { id = item.Id })">
+                                    <i class="ion ion-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

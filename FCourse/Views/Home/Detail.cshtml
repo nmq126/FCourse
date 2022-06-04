@@ -145,37 +145,37 @@
                                         {
                                             if (sectionDetail.Type == 0)
                                             {
-                                                <div class="lecture-container">
-                                                    <div class="left-content">
-                                                        <i class='uil uil-play-circle icon_142'></i>
-                                                        <div class="top">
-                                                            <div class="title">@sectionDetail.Name</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="details">
-                                                        <a href="#" class="preview-text">Preview</a>
-                                                        @{
+                                        <div class="lecture-container">
+                                            <div class="left-content">
+                                                <i class='uil uil-play-circle icon_142'></i>
+                                                <div class="top">
+                                                    <div class="title">@sectionDetail.Name</div>
+                                                </div>
+                                            </div>
+                                            <div class="details">
+                                                <a href="#" class="preview-text">Preview</a>
+                                                @{
                                                             TimeSpan time = TimeSpan.FromSeconds(@sectionDetail.Duration);
                                                             string str = time.ToString(@"mm\:ss");
-                                                        }
-                                                        <span class="content-summary">@str</span>
-                                                    </div>
-                                                </div>
+                                                }
+                                                <span class="content-summary">@str</span>
+                                            </div>
+                                        </div>
                                             }
                                             else
                                             {
-                                                <div class="lecture-container">
-                                                    <div class="left-content">
-                                                        <i class='uil uil-file-download-alt icon_142'></i>
-                                                        <div class="top">
-                                                            <div class="title">@sectionDetail.Name</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="details">
-                                                        <a href="#" class="preview-text">Preview</a>
-                                                        <span class="content-summary">1 pages</span>
-                                                    </div>
+                                        <div class="lecture-container">
+                                            <div class="left-content">
+                                                <i class='uil uil-file-download-alt icon_142'></i>
+                                                <div class="top">
+                                                    <div class="title">@sectionDetail.Name</div>
                                                 </div>
+                                            </div>
+                                            <div class="details">
+                                                <a href="#" class="preview-text">Preview</a>
+                                                <span class="content-summary">1 pages</span>
+                                            </div>
+                                        </div>
                                             }
                                         }
                                     </div>

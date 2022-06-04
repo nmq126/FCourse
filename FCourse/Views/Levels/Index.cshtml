@@ -4,31 +4,43 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
 }
+<style>
+    .row{
+        display: block!important
+    }
+</style>
 
-<h2>Index</h2>
+<div class="widget has-shadow">
+    <div class="widget-body">
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th width="15%">Id</th>
+                        <th width="50%">Name</th>
+                        <th width="35%">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><span class="text-primary">@Html.DisplayFor(modelItem => item.Id)</span></td>
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td class="td-actions">
+                                <a href="@Url.Action("Details", "Levels", new { id = item.Id })">
+                                    <i class="ion ion-information"></i>
+                                </a>
+                                <a href="@Url.Action("Edit", "Levels", new { id = item.Id })">
+                                    <i class="ion ion-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th></th>
-    </tr>
+                    }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,14 +1,133 @@
-﻿@model IEnumerable<FCourse.Models.Course>
+﻿@model PagedList.IPagedList<FCourse.Models.Course>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
 }
 
-<h2>Course list</h2>
+<style>
+    .pagination-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .pagination-container ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /*background-color: #333;*/
+        }
+
+        .pagination-container li {
+            float: left;
+            border-right: 1px solid #bbb;
+        }
+
+            .pagination-container li:last-child {
+                border-right: none;
+            }
+
+            .pagination-container li a {
+                display: block;
+                color: Black;
+                text-align: center;
+                padding: 8px 10px;
+                text-decoration: none;
+            }
+
+                .pagination-container li a:hover:not(.active) {
+                    background-color: white;
+                }
+
+        .pagination-container .active {
+            background-color: white;
+        }
+</style>
+
 <div class="col-xl-12">
     <div class="widget has-shadow">
         <div class="widget-body">
+            @using (Html.BeginForm("Index", "Courses", FormMethod.Get))
+            {
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label class="form-control-label">Select Category</label>
+                        <div class="select mb-3">
+                            <select name="categoryId" id="categoryId" class="custom-select form-control">
+                                <option value="">Select Category</option>
+                                @foreach (var category in ViewBag.CategoryList)
+                                {
+                                    if (category.Id == ViewBag.CategoryId)
+                                    {
+                                        <option value=@category.Id selected>@category.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value=@category.Id>@category.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-control-label">Select Level</label>
+                        <div class="select mb-3">
+                            <select name="levelId" id="levelId" class="custom-select form-control">
+                                <option value="">Select Level</option>
+                                @foreach (var level in ViewBag.LevelList)
+                                {
+                                    if (level.Id == ViewBag.LevelId)
+                                    {
+                                        <option value=@level.Id selected>@level.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value=@level.Id>@level.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-control-label">Sort by</label>
+                        <div class="select mb-3">
+                            <select name="sortType" id="sortType" class="custom-select form-control">
+                                <option value="">Sort by (Lastest default)</option>
+                                <option value="createdAt_asc" @(ViewBag.SortType == "createdAt_asc" ? "selected" : "")>Latest</option>
+                                <option value="createdAt_desc" @(ViewBag.SortType == "createdAt_desc" ? "selected" : "")>Oldest</option>
+                                <option value="price_asc" @(ViewBag.SortType == "price_asc" ? "selected" : "")>Price (Low to High)</option>
+                                <option value="price_desc" @(ViewBag.SortType == "price_desc" ? "selected" : "")>Price (High to Low)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label class="form-control-label">Search by Id</label>
+                        <div class="">
+                            @Html.TextBox("id", ViewBag.Id as string, new { @class = "form-control", placeholder = "Find by id" })
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-control-label">Search by keyword</label>
+                        <div class="">
+                            @Html.TextBox("keyword", ViewBag.Keyword as string, new { @class = "form-control", placeholder = "Name/Description/Detail/Teacher" })
+                        </div>
+                    </div>
+                    <div class="col-lg-4 text-right">
+                        <div style="height:28px"></div>
+                        <div>
+                            <button type="submit" class="btn btn-primary mr-1 mb-2">Search</button>
+                            <button type="reset" class="btn btn btn-outline-secondary mr-1 mb-2"><a href="/Courses">Clear</a></button>
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+
         </div>
     </div>
     <!-- Default -->
@@ -18,14 +137,14 @@
                 <table class="table mb-0">
                     <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Thumbnail</th>
-                            <th>Category</th>
-                            <th>Level</th>
-                            <th>Teacher</th>
-                            <th>Price</th>
-                            <th>Action</th>
+                            <th width="5%">Id</th>
+                            <th width="20%">Name</th>
+                            <th width="15%">Thumbnail</th>
+                            <th width="15%">Category</th>
+                            <th width="10%">Level</th>
+                            <th width="15%">Teacher</th>
+                            <th width="10%">Price</th>
+                            <th width="10%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,7 +153,7 @@
                             <tr>
                                 <td><span class="text-primary">@Html.DisplayFor(modelItem => item.Id)</span></td>
                                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                <td><img height="50" src="@Html.DisplayFor(modelItem => item.Thumbnail)" alt="thumbnail" /></td>
+                                <td><img width="150" src="@Html.DisplayFor(modelItem => item.Thumbnail)" alt="thumbnail" /></td>
                                 <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Level.Name)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Teacher.Name)</td>
@@ -53,8 +172,29 @@
 
                     </tbody>
                 </table>
+                @Html.PagedListPager(Model, page => Url.Action("Index",
+                            new { id = ViewBag.Id, sortType = ViewBag.SortType, keyword = ViewBag.Keyword, categoryId = ViewBag.CategoryId, levelId = ViewBag.LevelId, page }),
+                            new PagedListRenderOptions
+                            {
+                                DisplayLinkToIndividualPages = true,
+                                DisplayPageCountAndCurrentLocation = false,
+                                MaximumPageNumbersToDisplay = 10,
+                                LinkToFirstPageFormat = "««",
+                                LinkToPreviousPageFormat = "«",
+                                LinkToIndividualPageFormat = "{0}",
+                                LinkToNextPageFormat = "»",
+                                LinkToLastPageFormat = "»»",
+                                ContainerDivClasses = new string[] { "pagination-container mt-3" },
+                                UlElementClasses = new string[] { "pagination" },
+                                LiElementClasses = new string[] { "page-item" }
+                            })
             </div>
         </div>
     </div>
     <!-- End Default -->
 </div>
+
+@section Scripts{
+    <script src="~/Content/admin_vendor/js/bootstrap-select/bootstrap-select.min.js"></script>
+
+}

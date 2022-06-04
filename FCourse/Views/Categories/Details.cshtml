@@ -1,0 +1,36 @@
+﻿@model FCourse.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<div class="col-xl-12">
+    <div class="widget has-shadow">
+        <div class="widget-header bordered no-actions d-flex align-items-center">
+            <h4>Course #@Html.DisplayFor(model => model.Id)</h4>
+        </div>
+        <div class="widget-body">
+
+            <form class="form-horizontal">
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Id</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.Id)">
+                    </div>
+                </div>
+                <div class="form-group row d-flex align-items-center mb-5">
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Name</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.Name)">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

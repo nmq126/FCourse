@@ -46,7 +46,7 @@
                     <div class="menu dropdown_category5">
                         @foreach (var category in ViewBag.CategoryList)
                         {
-                            <a href="#" class="item channel_item">@category.Name</a>
+                        <a href="#" class="item channel_item">@category.Name</a>
                         }
                     </div>
                 </div>
@@ -137,9 +137,9 @@
                         <ul class="sub_menu">
                             @foreach (var category in ViewBag.CategoryList)
                             {
-                                <li class="sub_menu--item">
-                                    <a href="#" class="sub_menu--link">@category.Name</a>
-                                </li>
+                            <li class="sub_menu--item">
+                                <a href="#" class="sub_menu--link">@category.Name</a>
+                            </li>
 
                             }
                         </ul>
@@ -381,6 +381,5 @@
     <script src="~/Scripts/toastr.js"></script>
     <script src="~/Scripts/cart.js"></script>
     @RenderSection("scripts", required: false)
-
 </body>
 </html>

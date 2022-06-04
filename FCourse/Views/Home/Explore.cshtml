@@ -76,11 +76,11 @@
                                         {
                                             if (category.Id == ViewBag.CategoryId)
                                             {
-                                                <option value=@category.Id selected>@category.Name</option>
+                                    <option value=@category.Id selected>@category.Name</option>
                                             }
                                             else
                                             {
-                                                <option value=@category.Id>@category.Name</option>
+                                    <option value=@category.Id>@category.Name</option>
                                             }
                                         }
                                     </select>
@@ -90,17 +90,17 @@
                                         {
                                             if (level.Id == ViewBag.LevelID)
                                             {
-                                                <option value=@level.Id selected>@level.Name</option>
+                                    <option value=@level.Id selected>@level.Name</option>
                                             }
                                             else
                                             {
-                                                <option value=@level.Id>@level.Name</option>
+                                    <option value=@level.Id>@level.Name</option>
                                             }
                                         }
-                                    </select>
-                                </div>
+                                </select>
+                            </div>
 
-                                <input type="submit" hidden />
+                            <input type="submit" hidden />
                             }
                         </div>
                     </div>
@@ -130,36 +130,36 @@
                                                 <div class="crse_timer">
                                                     @{
                                                         var courseHour = Math.Round(course.Duration / 3600);
-                                                    }
-                                                    @courseHour hours
-                                                </div>
+                                                }
+                                                @courseHour hours
                                             </div>
-                                        </a>
-                                        <div class="fcrse_content">
-                                            <div class="eps_dots more_dropdown">
-                                                <a href="#"><i class="uil uil-ellipsis-v"></i></a>
-                                                <div class="dropdown-content">
-                                                    <span><i class='uil uil-share-alt'></i>Share</span>
-                                                    <span><i class="uil uil-heart"></i>Save</span>
-                                                    <span><i class='uil uil-ban'></i>Not Interested</span>
-                                                    <span><i class="uil uil-windsock"></i>Report</span>
-                                                </div>
+                                        </div>
+                                    </a>
+                                    <div class="fcrse_content">
+                                        <div class="eps_dots more_dropdown">
+                                            <a href="#"><i class="uil uil-ellipsis-v"></i></a>
+                                            <div class="dropdown-content">
+                                                <span><i class='uil uil-share-alt'></i>Share</span>
+                                                <span><i class="uil uil-heart"></i>Save</span>
+                                                <span><i class='uil uil-ban'></i>Not Interested</span>
+                                                <span><i class="uil uil-windsock"></i>Report</span>
                                             </div>
-                                            <div class="vdtodt">
-                                            </div>
-                                            <a href="course_detail_view.html" class="crse14s">@course.Name</a>
-                                            <a href="#" class="crse-cate">@course.Category.Name</a>
-                                            <div class="auth1lnkprce">
-                                                <p class="cr1fot">By <a href="#">@course.Teacher.Name</a></p>
-                                                <div class="prce142">$@course.Price</div>
-                                                <a href="#" class="shrt-cart-btn addToCart " title="cart" data-id="@course.Id">
-                                                    <i class="uil uil-shopping-cart-alt">
-                                                    </i>
-                                                </a>
-                                            </div>
+                                        </div>
+                                        <div class="vdtodt">
+                                        </div>
+                                        <a href="course_detail_view.html" class="crse14s">@course.Name</a>
+                                        <a href="#" class="crse-cate">@course.Category.Name</a>
+                                        <div class="auth1lnkprce">
+                                            <p class="cr1fot">By <a href="#">@course.Teacher.Name</a></p>
+                                            <div class="prce142">$@course.Price</div>
+                                            <a href="#" class="shrt-cart-btn addToCart " title="cart" data-id="@course.Id">
+                                                <i class="uil uil-shopping-cart-alt">
+                                                </i>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                             }
                         </div>
                         @Html.PagedListPager(Model, page => Url.Action("Explore",

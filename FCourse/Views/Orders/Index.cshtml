@@ -1,0 +1,55 @@
+﻿@model IEnumerable<FCourse.Models.Order>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<style>
+    .row {
+        display: block !important
+    }
+</style>
+
+<div class="widget has-shadow">
+    <div class="widget-body">
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th >Id</th>
+                        <th >User Id</th>
+                        <th >User Name</th>
+                        <th >Price</th>
+                        <th >Created At</th>
+                        <th >Status</th>
+                        <th >Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><span class="text-primary">@Html.DisplayFor(modelItem => item.Id)</span></td>
+                            <td>@Html.DisplayFor(modelItem => item.User.Id)</td>
+                            <td>@Html.DisplayFor(modelItem => item.User.UserName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.TotalPrice)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+                            <td>@(item.Status == 1 ? "Done" : "Pending")</td>
+                            <td class="td-actions">
+                                <a href="@Url.Action("Details", "Orders", new { id = item.Id })">
+                                    <i class="ion ion-information"></i>
+                                </a>
+                                <a href="@Url.Action("Edit", "Orders", new { id = item.Id })">
+                                    <i class="ion ion-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

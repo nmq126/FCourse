@@ -18,12 +18,15 @@ namespace FCourse.Controllers
         // GET: Levels
         public ActionResult Index()
         {
+            ViewBag.BreadCrumb = "Level List";
+
             return View(db.Levels.ToList());
         }
 
         // GET: Levels/Details/5
         public ActionResult Details(string id)
         {
+            ViewBag.BreadCrumb = "Level detail";
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -39,6 +42,7 @@ namespace FCourse.Controllers
         // GET: Levels/Create
         public ActionResult Create()
         {
+            ViewBag.BreadCrumb = "Create level";
             return View();
         }
 
@@ -62,6 +66,7 @@ namespace FCourse.Controllers
         // GET: Levels/Edit/5
         public ActionResult Edit(string id)
         {
+            ViewBag.BreadCrumb = "Edit level";
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -88,32 +93,6 @@ namespace FCourse.Controllers
                 return RedirectToAction("Index");
             }
             return View(level);
-        }
-
-        // GET: Levels/Delete/5
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Level level = db.Levels.Find(id);
-            if (level == null)
-            {
-                return HttpNotFound();
-            }
-            return View(level);
-        }
-
-        // POST: Levels/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            Level level = db.Levels.Find(id);
-            db.Levels.Remove(level);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
