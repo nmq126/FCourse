@@ -52,11 +52,13 @@
                             <div class="sidebar-section-item">
                                 <div class="section-item-title">
                                     <a href="#" class="pp-2 d-flex">
-                                        @if (item.Type == 0)
-                                        {
+                                        @{ 
                                             string idVideo = item.Content;
                                             string name = item.Name;
                                             string idSection = item.Id;
+                                        }
+                                        @if (item.Type == 0)
+                                        {
                                             <span class="lecture-status-icon pr-1">
                                                 <i class="uil uil-play-circle icon_142"></i>
                                             </span>
@@ -69,13 +71,12 @@
                                                     @item.Name <small>(@str)</small>
                                                 </span>
                                             </div>
-                                        }
-                                        else
-                                        {
+                                            }
+                                            else { 
                                             <span class="lecture-status-icon pr-1">
                                                 <i class="uil uil-file icon_142"></i>
                                             </span>
-                                            <div class="title-container pl-2 flex-grow-1 d-flex">
+                                            <div class="title-container pl-2 flex-grow-1 d-flex" data-name="@name" data-id="@idSection" onclick="showSectionReading(this)">
                                                 <span class="lecture-name flex-grow-1">
                                                     @item.Name
                                                 </span>
@@ -96,10 +97,14 @@
             <div class="lecture-content-inner mt-35">
                 <div class="lecture-content-inner-video">
                     <div class="video-responsive">
-                        <div id="existing-iframe">
-
-                        </div>
+                            <iframe id="existing-iframe"
+                                     src="https://www.youtube.com/embed/M7lcUVf-VE?enablejsapi=1"
+                                    style="display:none"
+                            ></iframe>
                         
+                    </div>
+                    <div id="reading-section">
+                        <h2>reading nay</h2>
                     </div>
                 </div>
             </div>
@@ -124,12 +129,12 @@
         tag.src = 'https://www.youtube.com/iframe_api';
         var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
         var player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('existing-iframe', {
                 playerVars: {
-                    'playsinline': 1,
-                    'enablejsapi': 1
+                    'enablejsapi': true
                 },
                 events: {
                     'onReady': onPlayerReady,
@@ -207,7 +212,26 @@
                     loadVideoById(id, pausedAt);
                 }
             });
+            $("#existing-iframe").css("display", "block")
+            $("#reading-section").css("display", "none")
+        }
 
+        function showSectionReading(obj) {
+            var name = obj.getAttribute("data-name");
+            var idSection = obj.getAttribute("data-id");
+            $("#existing-iframe").css("display", "none")
+            $("#reading-section").css("display", "block")
+            document.getElementById("lecture-title").innerHTML = "Section: " + name;
+            $.ajax({
+                type: "Get",
+                url: "/Home/GetUserSectionReading",
+                data: {
+                    userId: userId,
+                    sectionId: currentPlaySection
+                },
+                success: function (content) {
+                }
+            });
         }
     </script>
 </body>

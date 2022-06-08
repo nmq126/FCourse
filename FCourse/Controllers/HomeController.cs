@@ -61,12 +61,27 @@ namespace FCourse.Controllers
         public double GetUserSection(string userId, string sectionId)
         {
             UserSection userSection = db.UserSections.Where(u => u.UserId == userId).Where(u => u.SectionId == sectionId).FirstOrDefault();
-            return userSection.PausedAt;
+            return userSection != null ? userSection.PausedAt : 0;
+        }
+
+        public string GetUserSectionReading(string userId, string sectionId)
+        {
+            UserSection userSection = db.UserSections.Where(u => u.UserId == userId).Where(u => u.SectionId == sectionId).FirstOrDefault();
+            if (userSection == null)
+            {
+                return null;
+            }
+            userSection.IsFinished = true;
+            return userSection.Section.Content;
         }
 
         public void UpdateUserSection(string userId, string sectionId, double pausedAt)
         {
             UserSection userSection = db.UserSections.Where(u => u.UserId == userId).Where(u => u.SectionId == sectionId).FirstOrDefault();
+            if (userSection == null)
+            {
+                return;
+            }
             Section section = db.Sections.Find(sectionId);
             userSection.PausedAt = pausedAt;
             if (pausedAt > section.Duration * 0.75)
@@ -79,6 +94,10 @@ namespace FCourse.Controllers
         public void EndUserSection(string userId, string sectionId)
         {
             UserSection userSection = db.UserSections.Where(u => u.UserId == userId).Where(u => u.SectionId == sectionId).FirstOrDefault();
+            if (userSection == null)
+            {
+                return;
+            }
             userSection.IsFinished = true;
             userSection.PausedAt = 0;
             db.SaveChanges();

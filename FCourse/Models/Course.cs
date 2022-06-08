@@ -32,6 +32,7 @@ namespace FCourse.Models
         public double Rating { get; set; }
         [StringLength(255)]
         [Required]
+        [RegularExpression(@"(.*\.)(jpg|JPG|gif|GIF|png|PNG)$", ErrorMessage = "Only Image files allowed.")]
         public string Thumbnail { get; set; }
         [Required]
         public double Price { get; set; }

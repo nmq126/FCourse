@@ -249,16 +249,19 @@ namespace FCourse.Controllers
                     IsFinished = false
                 };
                 List<Section> sections = db.Sections.Where(s => s.CourseId == cart.course.Id).ToList();
-                foreach (var section in sections)
+                if (sections != null && sections.Count() >0)
                 {
-                    UserSection userSection = new UserSection()
-                    {
-                        UserId = userId,
-                        SectionId = section.Id,
-                        PausedAt = 0,
-                        IsFinished = false
-                    };
-                    db.UserSections.Add(userSection);
+                    foreach (var section in sections)
+                        {
+                            UserSection userSection = new UserSection()
+                            {
+                                UserId = userId,
+                                SectionId = section.Id,
+                                PausedAt = 0,
+                                IsFinished = false
+                            };
+                            db.UserSections.Add(userSection);
+                        }
                 }
 
                 db.OrderDetails.Add(orderDetail);
@@ -266,9 +269,6 @@ namespace FCourse.Controllers
 
                 try
                 {
-                    // Your code...
-                    // Could also be before try if you know the exception occurs in SaveChanges
-
                     db.SaveChanges();
                 }
                 catch (DbEntityValidationException e)
