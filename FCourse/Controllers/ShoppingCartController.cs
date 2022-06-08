@@ -32,8 +32,22 @@ namespace FCourse.Controllers
         public JsonResult AddtoCart(string id)
         {
             string message;
+            bool result;
+            string userId = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId());
+            if (userId != null)
+            {
+                var flag = db.UserCourses.Where(uc => uc.UserId == userId && uc.CourseId == id).FirstOrDefault();
+                if (flag != null)
+                {
+                    return Json(new
+                    {
+                        result = false,
+                        message = "User already purchased for this course"
+                    });
+                }
+            }
             var course = db.Courses.SingleOrDefault(s => s.Id == id);
-            var result = GetCart().Add(course);
+            result = GetCart().Add(course);
             if (result)
             {
                 message = "Add course success";
@@ -42,7 +56,6 @@ namespace FCourse.Controllers
             {
                 message = "Course already in cart";
             }
-
             return Json(new
             {
                 result = result,

@@ -209,6 +209,10 @@
     <Compile Include="Migrations\202206071330049_updatex.Designer.cs">
       <DependentUpon>202206071330049_updatex.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206081423113_update-tam.cs" />
+    <Compile Include="Migrations\202206081423113_update-tam.Designer.cs">
+      <DependentUpon>202206081423113_update-tam.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppRole.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -1033,6 +1037,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206071330049_updatex.resx">
       <DependentUpon>202206071330049_updatex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206081423113_update-tam.resx">
+      <DependentUpon>202206081423113_update-tam.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
