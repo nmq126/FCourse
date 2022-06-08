@@ -25,6 +25,9 @@ namespace FCourse.Models
         //public override string PhoneNumber { get; set; }
         [Column(TypeName = "ntext")]
         public string Description { get; set; }
+        [Column(TypeName = "ntext")]
+        [RegularExpression(@"(.*\.)(jpg|JPG|gif|GIF|png|PNG)$", ErrorMessage = "Only Image files allowed.")]
+        public string Thumbnail { get; set; }
         //[StringLength(255)]
         //[Required]
         //public override string Email { get; set; }

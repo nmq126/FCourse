@@ -189,6 +189,26 @@
     <Compile Include="Migrations\202206040859064_fix-db-n+3th-time.Designer.cs">
       <DependentUpon>202206040859064_fix-db-n+3th-time.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206061356216_fix-db-n+nth-time.cs" />
+    <Compile Include="Migrations\202206061356216_fix-db-n+nth-time.Designer.cs">
+      <DependentUpon>202206061356216_fix-db-n+nth-time.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206071231271_update.cs" />
+    <Compile Include="Migrations\202206071231271_update.Designer.cs">
+      <DependentUpon>202206071231271_update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206071244596_update2.cs" />
+    <Compile Include="Migrations\202206071244596_update2.Designer.cs">
+      <DependentUpon>202206071244596_update2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206071314597_update3.cs" />
+    <Compile Include="Migrations\202206071314597_update3.Designer.cs">
+      <DependentUpon>202206071314597_update3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206071330049_updatex.cs" />
+    <Compile Include="Migrations\202206071330049_updatex.Designer.cs">
+      <DependentUpon>202206071330049_updatex.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppRole.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -207,6 +227,7 @@
     <Compile Include="Models\ViewModel\LoginViewModel.cs" />
     <Compile Include="Models\ViewModel\RegisterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\YoutubeGetDurationUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
@@ -997,6 +1018,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206040859064_fix-db-n+3th-time.resx">
       <DependentUpon>202206040859064_fix-db-n+3th-time.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206061356216_fix-db-n+nth-time.resx">
+      <DependentUpon>202206061356216_fix-db-n+nth-time.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206071231271_update.resx">
+      <DependentUpon>202206071231271_update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206071244596_update2.resx">
+      <DependentUpon>202206071244596_update2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206071314597_update3.resx">
+      <DependentUpon>202206071314597_update3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206071330049_updatex.resx">
+      <DependentUpon>202206071330049_updatex.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

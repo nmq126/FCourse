@@ -165,7 +165,7 @@
                                 <td><span class="text-primary">@Html.Raw(section.Id)</span></td>
                                 <td>@Html.Raw(section.Name)</td>
                                 <td>@(section.Type == 0 ? "Video" : "Reading")</td>
-                                <td>@(section.Type == 0 ? section.Content : "Reading content too long to display")</td>
+                                <td>@(section.Type == 1 ? section.Content : "Reading content too long to display")</td>
                                 <td>@Html.Raw(section.Duration)</td>
                                 <td class="td-actions">
                                     <a href="@Url.Action("Details", "Sections", new { id = section.Id })">

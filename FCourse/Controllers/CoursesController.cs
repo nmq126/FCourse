@@ -1,8 +1,8 @@
 ﻿using FCourse.Data;
 using FCourse.Models;
+using FCourse.Util;
 using PagedList;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
@@ -130,17 +130,30 @@ namespace FCourse.Controllers
                 }
 
                 // section
-                var order = 1;
-                foreach (var item in course.Sections)
+                if (course.Sections != null && course.Sections.Count() > 0)
                 {
-                    do
+                    var order = 1;
+                    foreach (var item in course.Sections)
                     {
-                        item.Id = String.Concat("SCT_", Guid.NewGuid().ToString("N").Substring(0, 5));
-                    } while (db.Sections.FirstOrDefault(s => s.Id == item.Id) != null);
-                    item.Duration = 0;
-                    item.Order = order;
-                    order++;
+                        do
+                        {
+                            item.Id = String.Concat("SCT_", Guid.NewGuid().ToString("N").Substring(0, 5));
+                        } while (db.Sections.FirstOrDefault(s => s.Id == item.Id) != null);
+                        if (item.Type == 0)
+                        {
+                            item.Duration = YoutubeGetDurationUtil.GetYoutubeVideoDurationAsync(item.Content).Result;
+                        }
+                        else
+                        {
+                            item.Duration = 0;
+                        }
+                        //thu tu trong course
+                        item.Order = order;
+                        order++;
+                        course.Duration += item.Duration;
+                    }
                 }
+                
                 db.Courses.Add(course);
                 try
                 {
@@ -212,6 +225,8 @@ namespace FCourse.Controllers
             ViewBag.TeacherList = new SelectList(db.Teachers, "Id", "Name", course.TeacherId);
             return View(course);
         }
+
+        
 
         protected override void Dispose(bool disposing)
         {

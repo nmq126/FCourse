@@ -19,7 +19,6 @@ namespace FCourse.Controllers
         public ActionResult Index()
         {
             ViewBag.BreadCrumb = "Category List";
-
             return View(db.Categories.OrderBy(c => c.CreatedAt).ToList());
         }
 
