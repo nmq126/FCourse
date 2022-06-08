@@ -5,6 +5,13 @@
     Layout = "~/Views/Shared/_LayoutPageClient.cshtml";
 }
 
+<style>
+    .fit-img {
+        width: 250px;
+        height: 120px;
+        object-fit: cover;
+    }
+</style>
 <div class="sa4d25">
     <div class="container-fluid">
         <div class="row">
@@ -19,7 +26,7 @@
                                 <div class="item">
                                     <div class="fcrse_1 mb-20">
                                         <a href="/Home/Detail/?id=@course.Id" class="fcrse_img">
-                                            <img src="@course.Thumbnail" alt="">
+                                            <img src="@course.Thumbnail" alt="" class="fit-img">
                                             <div class="course-overlay">
                                                 <div class="badge_seller">@course.Level.Name</div>
                                                 <div class="crse_reviews">
@@ -77,7 +84,7 @@
                                 <div class="item">
                                     <div class="fcrse_1 mb-20">
                                         <a href="/Home/Detail/?id=@course.Id" class="fcrse_img">
-                                            <img src="@course.Thumbnail" alt="">
+                                            <img src="@course.Thumbnail" alt="" class="fit-img">
                                             <div class="course-overlay">
                                                 <div class="badge_seller">@course.Level.Name</div>
                                                 <div class="crse_reviews">
