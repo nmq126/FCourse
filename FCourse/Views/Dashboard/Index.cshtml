@@ -1,0 +1,302 @@
+﻿@model FCourse.Models.Order
+
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="Elisyam is a Web App and Admin Dashboard Template built with Bootstrap 4">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Google Fonts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script>
+        WebFont.load({
+            google: { "families": ["Montserrat:400,500,600,700", "Noto+Sans:400,700"] },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+    <!-- Favicon -->
+    @*<link rel="apple-touch-icon" sizes="180x180" href="@Url.Content("~/Content/admin_img/apple-touch-icon.png")" />
+        <link rel="icon" type="image/png" sizes="32x32" href="@Url.Content("~/Content/admin_img/favicon-32x32.png")" />
+        <link rel="icon" type="image/png" sizes="16x16" href="@Url.Content("~/Content/admin_img/favicon-16x16.png")" />*@
+    <link rel="icon" type="image/png" href="@Url.Content("~/Content/client_img/logoFavicontuche.png")">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/admin_vendor/css/base/bootstrap.min.css")" media="screen" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/admin_vendor/css/base/elisyam-1.5.css")" media="screen" type="text/css" />
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/toastr.css")" media="screen" type="text/css" />
+    <script>
+window.onload = function () {
+
+var chart = new CanvasJS.Chart("chartContainerColumn", {
+	animationEnabled: true,
+	theme: "light2", // "light1", "dark1", "dark2"
+	exportEnabled: true,
+	title: {
+        text: "Revenue by year"
+	},
+	data: [{
+        type: "column",
+		dataPoints:  @Html.Raw(ViewBag.DataPoints)
+	}]
+});
+chart.render();
+
+}
+    </script>
+</head>
+<body id="page-top">
+    <div id="preloader">
+        <div class="canvas">
+            <img src="@Url.Content("~/Content/admin_img/logo.png")" alt="logo" class="loader-logo">
+            <div class="spinner"></div>
+        </div>
+    </div>
+    <div class="page">
+        <!-- Begin Header -->
+        <header class="header">
+            <nav class="navbar fixed-top">
+                <!-- Begin Search Box-->
+                <div class="search-box">
+                    <button class="dismiss"><i class="ion-close-round"></i></button>
+                    <form id="searchForm" action="#" role="search">
+                        <input type="search" placeholder="Search something ..." class="form-control">
+                    </form>
+                </div>
+                <!-- End Search Box-->
+                <!-- Begin Topbar -->
+                <div class="navbar-holder d-flex align-items-center align-middle justify-content-between">
+                    <!-- Begin Logo -->
+                    <div class="navbar-header">
+                        <a href="db-default.html" class="navbar-brand">
+                            <div class="brand-image brand-big">
+                                <img src="@Url.Content("~/Content/client_img/logoTuche2.png")" alt="logo" class="logo-big">
+                            </div>
+                            <div class="brand-image brand-small">
+                                <img src="~/Content/client_img/logoFavicontuche.png" alt="logo" class="logo-small">
+                            </div>
+                        </a>
+                        <!-- Toggle Button -->
+                        <a id="toggle-btn" href="#" class="menu-btn active">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </a>
+                        <!-- End Toggle -->
+                    </div>
+                    <!-- End Logo -->
+                    <!-- Begin Navbar Menu -->
+                    <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center pull-right">
+                        <!-- Search -->
+                        <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="la la-search"></i></a></li>
+                        <!-- End Search -->
+                        <!-- User -->
+                        <li class="nav-item dropdown">
+                            <a id="user" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><img src="@Url.Content("~/Content/admin_img/avatar/avatar-01.jpg")" alt="..." class="avatar rounded-circle"></a>
+                            <ul aria-labelledby="user" class="user-size dropdown-menu">
+                                <li class="welcome">
+                                    <a href="#" class="edit-profil"><i class="la la-gear"></i></a>
+                                    <img src="@Url.Content("~/Content/admin_img/avatar/avatar-01.jpg")" alt="..." class="rounded-circle">
+                                </li>
+                                <li>
+                                    <a href="pages-profile.html" class="dropdown-item">
+                                        Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="app-mail.html" class="dropdown-item">
+                                        Messages
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="dropdown-item no-padding-bottom">
+                                        Settings
+                                    </a>
+                                </li>
+                                <li class="separator"></li>
+                                <li>
+                                    <a href="pages-faq.html" class="dropdown-item no-padding-top">
+                                        Faq
+                                    </a>
+                                </li>
+                                <li><a rel="nofollow" href="pages-login.html" class="dropdown-item logout text-center"><i class="ti-power-off"></i></a></li>
+                            </ul>
+                        </li>
+                        <!-- End User -->
+                    </ul>
+                    <!-- End Navbar Menu -->
+                </div>
+                <!-- End Topbar -->
+            </nav>
+        </header>
+        <!-- End Header -->
+        <!-- Begin Page Content -->
+        <div class="page-content d-flex align-items-stretch">
+            <div class="default-sidebar">
+                <!-- Begin Side Navbar -->
+                <nav class="side-navbar box-scroll sidebar-scroll">
+                    <!-- Begin Main Navigation -->
+                    <ul class="list-unstyled">
+                        <li class="active">
+                            <a href="#dropdown-db" aria-expanded="true" data-toggle="collapse"><i class="la la-book"></i><span>Course</span></a>
+                            <ul id="dropdown-db" class="collapse list-unstyled show pt-0">
+                                <li><a href="@Url.Action("Index", "Courses")">Courses List</a></li>
+                                <li><a href="@Url.Action("Create", "Courses")">Create Course</a></li>
+                            </ul>
+                            <a href="#dropdown-db" aria-expanded="true" data-toggle="collapse"><i class="la la-star-half-o"></i><span>Level</span></a>
+                            <ul id="dropdown-db" class="collapse list-unstyled show pt-0">
+                                <li><a href="@Url.Action("Index", "Levels")">Level List</a></li>
+                                <li><a href="@Url.Action("Create", "Levels")">Create Level</a></li>
+                            </ul>
+                            <a href="#dropdown-db" aria-expanded="true" data-toggle="collapse"><i class="la la-file-text-o"></i><span>Category</span></a>
+                            <ul id="dropdown-db" class="collapse list-unstyled show pt-0">
+                                <li><a href="@Url.Action("Index", "Categories")">Category List</a></li>
+                                <li><a href="@Url.Action("Create", "Categories")">Create Category</a></li>
+                            </ul>
+                            <a href="@Url.Action("Index", "Orders")"><i class="la la-cart-plus"></i><span>Order List</span></a>
+                            <a href="@Url.Action("Index", "Users")"><i class="la la-user"></i><span>User List</span></a>
+                        </li>
+                    </ul>
+                    <!-- End Main Navigation -->
+                </nav>
+                <!-- End Side Navbar -->
+            </div>
+            <!-- End Left Sidebar -->
+            <div class="content-inner">
+                <div class="container-fluid">
+                    <!-- Begin Page Header-->
+                    <div class="row">
+                        <div class="page-header">
+                            <div class="d-flex align-items-center">
+                                <h2 class="page-header-title">@ViewBag.BreadCrumb</h2>
+                                <div>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="db-default.html"><i class="ti ti-home"></i></a></li>
+                                        <li class="breadcrumb-item active">@ViewBag.BreadCrumb</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Page Header -->
+                    <div class="row flex-row">
+                        <!-- Begin Facebook -->
+                        <div class="col-xl-4 col-md-6 col-sm-6">
+                            <div class="widget widget-12 has-shadow">
+                                <div class="widget-body">
+                                    <div class="media">
+                                        <div class="align-self-center ml-5 mr-5">
+                                            <i class="ion-social-facebook text-facebook"></i>
+                                        </div>
+                                        <div class="media-body align-self-center">
+                                            <div class="title text-facebook">David Green</div>
+                                            <div class="number">10,865 Likes</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Facebook -->
+                        <!-- Begin Twitter -->
+                        <div class="col-xl-4 col-md-6 col-sm-6">
+                            <div class="widget widget-12 has-shadow">
+                                <div class="widget-body">
+                                    <div class="media">
+                                        <div class="align-self-center ml-5 mr-5">
+                                            <i class="ion-social-twitter text-twitter"></i>
+                                        </div>
+                                        <div class="media-body align-self-center">
+                                            <div class="title text-twitter">David_Green</div>
+                                            <div class="number">8,986 Followers</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Twitter -->
+                        <!-- Begin Linkedin -->
+                        <div class="col-xl-4 col-md-6 col-sm-6">
+                            <div class="widget widget-12 has-shadow">
+                                <div class="widget-body">
+                                    <div class="media">
+                                        <div class="align-self-center ml-5 mr-5">
+                                            <i class="ion-social-linkedin-outline text-linkedin"></i>
+                                        </div>
+                                        <div class="media-body align-self-center">
+                                            <div class="title text-linkedin">David_Green</div>
+                                            <div class="number">3,654 Followers</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Linkedin -->
+                    </div>
+                    <div class="row flex-row">
+                        <div class="col-xl-12 col-md-6">
+                            <div class="widget widget-09 has-shadow row p-3">
+                                <div class="form-group col-3">
+                                    @using (Html.BeginForm("Index", "Dashboard", FormMethod.Get))
+                                    {
+                                        <div class="select mb-3">
+                                            <select name="year" class="custom-select form-control" onchange="javascript:this.form.submit()">
+                                                <option value="">Select year</option>
+                                                <option value="2017">2017</option>
+                                                <option value="2018">2018</option>
+                                                <option value="2019">2019</option>
+                                                <option value="2020">2020</option>
+                                                <option value="2021">2021</option>
+                                            </select>
+                                        </div>
+                                    }
+                                </div>
+                                <div id="chartContainerColumn" style="height: 370px; width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row flex-row">
+                        <div class="col-xl-12 col-md-6">
+                            <div class="widget widget-09 has-shadow row p-3">
+                                <div class="form-group col-3">
+
+                                    <div class="select mb-3">
+                                        <select name="account" class="custom-select form-control">
+                                            <option>Select year</option>
+                                            <option>option 2</option>
+                                            <option>option 3</option>
+                                            <option>option 4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="chartContainer1" style="height: 370px; width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#" class="go-top"><i class="la la-arrow-up"></i></a>
+            </div>
+        </div>
+        <!-- End Page Content -->
+    </div>
+    <script src="~/Content/admin_vendor/js/base/jquery.min.js"></script>
+    <script src="~/Content/admin_vendor/js/base/core.min.js"></script>
+
+    <!-- End Vendor Js -->
+    <!-- Begin Page Vendor Js -->
+    <script src="~/Content/admin_vendor/js/nicescroll/nicescroll.min.js"></script>
+    <script src="~/Content/admin_vendor/js/app/app.min.js"></script>
+    <!-- End Page Vendor Js -->
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+</body>
+</html>
