@@ -207,81 +207,26 @@ namespace FCourse.Controllers
                     return View("~/Views/Home/Error_404.cshtml");
                 }
 
-            //Add new order
-            var listItems = new ItemList() { items = new List<Item>() };
-            Cart listCarts = Session["Cart"] as Cart;
-            string userId = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId());
-            var order = new Order()
-            {
-                Id = String.Concat("ORD_", Guid.NewGuid().ToString("N").Substring(0, 5)),
-                UserId = userId,
-                TotalPrice = Convert.ToString(listCarts.Items.Sum(s => s.course.Price * (1 - s.course.Discount / 100)).ToString()),
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now,
-                DisabledAt = DateTime.Now,
-                Status = 1
-            };
-            db.Orders.Add(order);
-            try
-            {
-                // Your code...
-                // Could also be before try if you know the exception occurs in SaveChanges
-
-                db.SaveChanges();
-            }
-            catch (DbEntityValidationException e)
-            {
-                foreach (var eve in e.EntityValidationErrors)
+                //Add new order
+                var listItems = new ItemList() { items = new List<Item>() };
+                Cart listCarts = Session["Cart"] as Cart;
+                string userId = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId());
+                var order = new Order()
                 {
-                    Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                            ve.PropertyName, ve.ErrorMessage);
-                    }
-                }
-                throw;
-            }
-
-            //Add order details
-            
-            foreach (var cart in listCarts.Items)
-            {
-                OrderDetail orderDetail = new OrderDetail()
-                {
-                    OrderId = order.Id,
-                    CourseId = cart.course.Id,
-                    UnitPrice = cart.course.Price
-                };
-                UserCourse userCourse = new UserCourse()
-                {
-                    CourseId = cart.course.Id,
+                    Id = String.Concat("ORD_", Guid.NewGuid().ToString("N").Substring(0, 5)),
                     UserId = userId,
-                    Grade = null,
-                    IsFinished = false
+                    TotalPrice = listCarts.Items.Sum(s => s.course.Price * (1 - s.course.Discount / 100)),
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                    DisabledAt = DateTime.Now,
+                    Status = 1
                 };
-                List<Section> sections = db.Sections.Where(s => s.CourseId == cart.course.Id).ToList();
-                if (sections != null && sections.Count() >0)
-                {
-                    foreach (var section in sections)
-                        {
-                            UserSection userSection = new UserSection()
-                            {
-                                UserId = userId,
-                                SectionId = section.Id,
-                                PausedAt = 0,
-                                IsFinished = false
-                            };
-                            db.UserSections.Add(userSection);
-                        }
-                }
-
-                db.OrderDetails.Add(orderDetail);
-                db.UserCourses.Add(userCourse);
-
+                db.Orders.Add(order);
                 try
                 {
+                    // Your code...
+                    // Could also be before try if you know the exception occurs in SaveChanges
+
                     db.SaveChanges();
                 }
                 catch (DbEntityValidationException e)
@@ -298,7 +243,62 @@ namespace FCourse.Controllers
                     }
                     throw;
                 }
-            }
+
+                //Add order details
+
+                foreach (var cart in listCarts.Items)
+                {
+                    OrderDetail orderDetail = new OrderDetail()
+                    {
+                        OrderId = order.Id,
+                        CourseId = cart.course.Id,
+                        UnitPrice = cart.course.Price
+                    };
+                    UserCourse userCourse = new UserCourse()
+                    {
+                        CourseId = cart.course.Id,
+                        UserId = userId,
+                        Grade = null,
+                        IsFinished = false
+                    };
+                    List<Section> sections = db.Sections.Where(s => s.CourseId == cart.course.Id).ToList();
+                    if (sections != null && sections.Count() > 0)
+                    {
+                        foreach (var section in sections)
+                        {
+                            UserSection userSection = new UserSection()
+                            {
+                                UserId = userId,
+                                SectionId = section.Id,
+                                PausedAt = 0,
+                                IsFinished = false
+                            };
+                            db.UserSections.Add(userSection);
+                        }
+                    }
+
+                    db.OrderDetails.Add(orderDetail);
+                    db.UserCourses.Add(userCourse);
+
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (DbEntityValidationException e)
+                    {
+                        foreach (var eve in e.EntityValidationErrors)
+                        {
+                            Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                            foreach (var ve in eve.ValidationErrors)
+                            {
+                                Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                    ve.PropertyName, ve.ErrorMessage);
+                            }
+                        }
+                        throw;
+                    }
+                }
 
                 Session.Remove("Cart");
                 return View("~/Views/Home/ThankYou.cshtml");
