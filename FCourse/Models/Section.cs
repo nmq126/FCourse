@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace FCourse.Models
 {
@@ -23,6 +24,7 @@ namespace FCourse.Models
         public int Type { get; set; }
         [Column(TypeName = "ntext")]
         [Required]
+        [AllowHtml]
         public string Content { get; set; }
         public double Duration { get; set; }
         [Required]

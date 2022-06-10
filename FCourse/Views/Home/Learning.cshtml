@@ -38,7 +38,12 @@
                     <a href="/" class="hde152">Back</a>
                 </div>
             </div>
-            <h4 class="p-4 lecture-sidebar-course-title">@Model.Name</h4>
+            
+            <h4 class="p-4 lecture-sidebar-course-title">
+                @Model.Name
+                        @if (ViewBag.IsFinishedCourse)
+                        {<i class="uil uil-check-circle " data-toggle="tooltip" data-placement="top" title="Course completed"></i>}
+                    </h4>
             <div class="lecture-sidebar-curriculum-wrap">
                 <div class="course-course-section">
                     <div class="section-header pp-2 d-flex">
@@ -49,36 +54,49 @@
                     {
                         foreach (var item in ViewBag.SectionList)
                         {
+                            bool isFinished = false;
+                            foreach (var us in ViewBag.UserSections)
+                            {
+                                if (us.SectionId == item.Id)
+                                {
+                                    isFinished = us.IsFinished;
+                                }
+                            }
                             <div class="sidebar-section-item">
                                 <div class="section-item-title">
                                     <a href="#" class="pp-2 d-flex">
-                                        @{ 
+                                        @{
                                             string idVideo = item.Content;
                                             string name = item.Name;
                                             string idSection = item.Id;
+                                            string order = item.Order.ToString();
                                         }
                                         @if (item.Type == 0)
                                         {
-                                            <span class="lecture-status-icon pr-1">
-                                                <i class="uil uil-play-circle icon_142"></i>
-                                            </span>
-                                            <div id=@idVideo data-name="@name" data-id="@idSection" class="title-container pl-2 flex-grow-1 d-flex" onclick="playSectionVideo(this)">
+                                            if (isFinished)
+                                            {
+                                                <i class="uil uil-check-circle " data-toggle="tooltip" data-placement="top" title="Section completed"></i>
+                                            }
+
+                                            <div id=@idVideo data-order="@order" data-name="@name" data-id="@idSection" class="title-container pl-2 flex-grow-1 d-flex" onclick="playSectionVideo(this)">
                                                 <span class="lecture-name flex-grow-1">
                                                     @{
                                                         TimeSpan time = TimeSpan.FromSeconds(item.Duration);
                                                         string str = time.ToString(@"mm\:ss");
                                                     }
-                                                    @item.Name <small>(@str)</small>
+                                                    @item.Name -  <small>Video (@str)</small>
                                                 </span>
                                             </div>
+                                        }
+                                        else
+                                        {
+                                            if (isFinished)
+                                            {
+                                                <i class="uil uil-check-circle " data-toggle="tooltip" data-placement="top" title="Section completed"></i>
                                             }
-                                            else { 
-                                            <span class="lecture-status-icon pr-1">
-                                                <i class="uil uil-file icon_142"></i>
-                                            </span>
-                                            <div class="title-container pl-2 flex-grow-1 d-flex" data-name="@name" data-id="@idSection" onclick="showSectionReading(this)">
+                                            <div class="title-container pl-2 flex-grow-1 d-flex" data-order="@order" data-name="@name" data-id="@idSection" onclick="showSectionReading(this)">
                                                 <span class="lecture-name flex-grow-1">
-                                                    @item.Name
+                                                    @item.Name - <small>Reading</small>
                                                 </span>
                                             </div>
                                         }
@@ -103,8 +121,8 @@
                             ></iframe>
                         
                     </div>
-                    <div id="reading-section">
-                        <h2>reading nay</h2>
+                    <div id="reading-section" style="display:none">
+                        
                     </div>
                 </div>
             </div>
@@ -168,7 +186,8 @@
             }
         }
         function loadVideoById(id, startAt) {
-            player.cueVideoById(id, startAt);
+            console.log("load video by " + startAt)
+            player.loadVideoById(id, startAt);
         }
 
         function endSectionVideo() {
@@ -198,8 +217,9 @@
             var id = obj.id;
             var name = obj.getAttribute("data-name");
             var idSection = obj.getAttribute("data-id");
+            var order = obj.getAttribute("data-order");
             currentPlaySection = idSection;
-            document.getElementById("lecture-title").innerHTML = "Section: " + name;
+            document.getElementById("lecture-title").innerHTML = "Section " + order + ": " + name;
             $.ajax({
                 type: "Get",
                 url: "/Home/GetUserSection",
@@ -218,17 +238,20 @@
         function showSectionReading(obj) {
             var name = obj.getAttribute("data-name");
             var idSection = obj.getAttribute("data-id");
+            var order = obj.getAttribute("data-order");
             $("#existing-iframe").css("display", "none")
             $("#reading-section").css("display", "block")
-            document.getElementById("lecture-title").innerHTML = "Section: " + name;
+            document.getElementById("lecture-title").innerHTML = "Section " + order + ": " + name;
             $.ajax({
                 type: "Get",
                 url: "/Home/GetUserSectionReading",
                 data: {
                     userId: userId,
-                    sectionId: currentPlaySection
+                    sectionId: idSection
                 },
                 success: function (content) {
+                    console.log(content)
+                    $("#reading-section").html(content)
                 }
             });
         }

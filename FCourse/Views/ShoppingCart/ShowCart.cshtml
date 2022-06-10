@@ -111,51 +111,54 @@
         </div>
         <div class="mb4d25">
             <div class="container">
+                <div class="text-danger mb-4">
+                    @TempData["data"]
+                </div>
                 <div class="row">
                     @if (Model != null)
                     {
-                    <div class="col-lg-8">
-                        @foreach (var item in Model.Items)
+                        <div class="col-lg-8">
+                            @foreach (var item in Model.Items)
                             {
-                        <div class="fcrse_1">
-                            <a href="/Home/Detail/?id=@item.course.Id" class="hf_img">
-                                <img class="cart_img" src="@item.course.Thumbnail" alt="">
-                            </a>
-                            <div class="hs_content">
-                                <div class="eps_dots eps_dots10 more_dropdown">
-                                    <a href="/ShoppingCart/RemoveCart?id=@item.course.Id"><i class='uil uil-times'></i></a>
+                                <div class="fcrse_1">
+                                    <a href="/Home/Detail/?id=@item.course.Id" class="hf_img">
+                                        <img class="cart_img" src="@item.course.Thumbnail" alt="">
+                                    </a>
+                                    <div class="hs_content">
+                                        <div class="eps_dots eps_dots10 more_dropdown">
+                                            <a href="/ShoppingCart/RemoveCart?id=@item.course.Id"><i class='uil uil-times'></i></a>
+                                        </div>
+                                        <a href="course_detail_view.html" class="crse14s title900 pt-2">@item.course.Name</a>
+                                        <a href="#" class="crse-cate">@item.course.Category.Name</a>
+                                        <div class="auth1lnkprce">
+                                            <p class="cr1fot">By <a href="#">@item.course.Teacher.Name</a></p>
+                                            <div class="prce142">$@item.course.Price</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <a href="course_detail_view.html" class="crse14s title900 pt-2">@item.course.Name</a>
-                                <a href="#" class="crse-cate">@item.course.Category.Name</a>
-                                <div class="auth1lnkprce">
-                                    <p class="cr1fot">By <a href="#">@item.course.Teacher.Name</a></p>
-                                    <div class="prce142">$@item.course.Price</div>
-                                </div>
-                            </div>
-                        </div>
                             }
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="membership_chk_bg rght1528">
-                            <div class="checkout_title">
-                                <h4>Total</h4>
-                                <img src="images/line.svg" alt="">
-                            </div>
-                            <div class="order_dt_section">
-                                <div class="order_title">
-                                    <h4>Orignal Price</h4>
-                                    <div class="order_price">$@Model.OriginalTotal()</div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="membership_chk_bg rght1528">
+                                <div class="checkout_title">
+                                    <h4>Total</h4>
+                                    <img src="images/line.svg" alt="">
                                 </div>
-                                <div class="order_title">
-                                    <h6>Discount Price</h6>
-                                    <div class="order_price">$@Model.DiscountPrice()</div>
-                                </div>
-                                <div class="order_title">
-                                    <h2>Total</h2>
-                                    <div class="order_price5">$@Model.Total()</div>
-                                </div>
+                                <div class="order_dt_section">
+                                    <div class="order_title">
+                                        <h4>Orignal Price</h4>
+                                        <div class="order_price">$@Model.OriginalTotal()</div>
+                                    </div>
+                                    <div class="order_title">
+                                        <h6>Discount Price</h6>
+                                        <div class="order_price">$@Model.DiscountPrice()</div>
+                                    </div>
+                                    <div class="order_title">
+                                        <h2>Total</h2>
+                                        <div class="order_price5">$@Model.Total()</div>
+                                    </div>
 
-                                    <a href="/ShoppingCart/PaymentWithPaypal" class="chck-btn22">Checkout Now</a>
+                                    <a href="/ShoppingCart/CheckExistCourse" class="chck-btn22">Checkout Now</a>
                                 </div>
                             </div>
                         </div>

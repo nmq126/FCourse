@@ -14,6 +14,7 @@ using PagedList;
 
 namespace FCourse.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         private DBContext db = new DBContext();

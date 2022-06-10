@@ -11,6 +11,7 @@ using FCourse.Models;
 
 namespace FCourse.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class LevelsController : Controller
     {
         private DBContext db = new DBContext();

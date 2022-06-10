@@ -15,10 +15,10 @@
                                 
                                 <div class="dp_dt150">
                                     <div class="img148">
-                                        <img src="https://res.cloudinary.com/nmqdec6/image/upload/v1654323387/444_v2mbh2.png" width="100%" alt="">
+                                        <img src="@(Model.Thumbnail == null ? "https://res.cloudinary.com/nmqdec6/image/upload/v1654323387/444_v2mbh2.png" : Model.Thumbnail )" width="100%" alt="">
                                     </div>
                                     <div class="prfledt1">
-                                        <h2>@Model.LastName @Model.LastName</h2>
+                                        <h2>@Model.FirstName @Model.LastName</h2>
                                         <span>@Model.UserName</span>
                                     </div>
                                 </div>
@@ -141,7 +141,7 @@
                                                         </div>
                                                         <div class="vdtodt">
                                                         </div>
-                                                        <a href="course_detail_view.html" class="crse14s">@course.Name</a>
+                                                        <a href="#" class="crse14s">@course.Name</a>
                                                         <a href="#" class="crse-cate">@course.Category.Name</a>
                                                         <div class="auth1lnkprce">
                                                             <p class="cr1fot">By <a href="#">@course.Teacher.Name</a></p>
