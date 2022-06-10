@@ -1,10 +1,13 @@
 ﻿using FCourse.Data;
 using FCourse.Models;
+using FCourse.Util;
 using Microsoft.AspNet.Identity;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -20,7 +23,7 @@ namespace FCourse.Controllers
             ViewBag.UserName = HttpContext.GetOwinContext().Authentication.User.Identity.Name;
             ViewBag.TeacherList = from s in db.Teachers select s;
             ViewBag.CategoryList = from s in db.Categories select s;
-            return View(db.Courses.ToList());
+            return View(db.Courses.Where(x => x.Status == 1).ToList());
         }
 
         public ActionResult Detail(string id)
@@ -46,13 +49,32 @@ namespace FCourse.Controllers
 
         public ActionResult Learning(string id)
         {
-            ViewBag.UserId = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId());
+            if (!User.Identity.IsAuthenticated)
+            {
+                TempData["data"] = "You must login to learn.";
+                return RedirectToAction("Login", "User");
+            }
+            string userId;
+            ViewBag.UserId = userId = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId());
             Course course = db.Courses.Find(id);
             if (course == null)
             {
                 return View("~/Views/Home/Error_404.cshtml");
             }
+            UserCourse userCourse = db.UserCourses.Where(uc => uc.UserId == userId && uc.CourseId == course.Id).FirstOrDefault();
+            if (userCourse == null)
+            {
+                return View("~/Views/Home/Error_404.cshtml");
+            }
             ViewBag.CategoryList = from s in db.Categories select s;
+            List<Section> listSection = db.Sections.Where(x => x.CourseId == id).ToList();
+            List<String> listSectionId = new List<String>();
+            foreach (var item in listSection)
+            {
+                listSectionId.Add(item.Id);
+            }
+            ViewBag.IsFinishedCourse = userCourse.IsFinished;
+            ViewBag.UserSections = db.UserSections.Where(x => x.UserId == userId && listSectionId.Contains(x.SectionId));
             ViewBag.SectionList = db.Sections.Where(x => x.CourseId == id);
             ViewBag.SectionCount = db.Sections.Where(x => x.CourseId == id).Count();
             return View(course);
@@ -72,6 +94,7 @@ namespace FCourse.Controllers
                 return null;
             }
             userSection.IsFinished = true;
+            db.SaveChanges();
             return userSection.Section.Content;
         }
 
@@ -83,12 +106,55 @@ namespace FCourse.Controllers
                 return;
             }
             Section section = db.Sections.Find(sectionId);
-            userSection.PausedAt = pausedAt;
-            if (pausedAt > section.Duration * 0.75)
+            if (pausedAt > userSection.PausedAt)
             {
-                userSection.IsFinished = true;
+                userSection.PausedAt = pausedAt;
+                if (pausedAt > section.Duration * 0.75)
+                {
+                    userSection.IsFinished = true;
+                    UpdateUserCourse(userId, sectionId);
+                }
+                db.SaveChanges();
             }
-            db.SaveChanges();
+        }
+
+        public void UpdateUserCourse(string userId, string sectionId)
+        {
+            var section = db.Sections.Find(sectionId);
+            if (section == null)
+            {
+                return;
+            }
+            var courseId = section.CourseId;
+            bool flag = true;
+            var uc = db.UserCourses.Where(x => x.UserId == userId && x.CourseId == courseId).FirstOrDefault();
+            if (uc == null)
+            {
+                return;
+            }
+            var sections = db.Sections.Where(x => x.CourseId == courseId);
+            if (sections == null || sections.Count() == 0)
+            {
+                return;
+            }
+            foreach (var item in sections)
+            {
+                var us = db.UserSections.Where(x => x.UserId == userId && x.SectionId == item.Id).FirstOrDefault();
+                if (us == null)
+                {
+                    return;
+                }
+                if (!us.IsFinished)
+                {
+                    flag = false;
+                }
+            }
+            if (flag)
+            {
+                uc.IsFinished = true;
+                db.SaveChanges();
+                return;
+            }
         }
 
         public void EndUserSection(string userId, string sectionId)
@@ -101,6 +167,7 @@ namespace FCourse.Controllers
             userSection.IsFinished = true;
             userSection.PausedAt = 0;
             db.SaveChanges();
+            UpdateUserCourse(userId, sectionId);
         }
 
         public ActionResult UserProfile()
@@ -154,13 +221,16 @@ namespace FCourse.Controllers
             int pageNumber = (page ?? 1);
             int pageSize = 8;
 
-            return View(courses.OrderBy(s => s.CreatedAt).ToPagedList(pageNumber, pageSize));
+            return View(courses.Where(x => x.Status == 1).OrderBy(s => s.CreatedAt).ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult Test()
+        public async Task<ActionResult> Test()
         {
-            ViewBag.Message = "Your Test page.";
-
+            ViewBag.Message = "TEst diu tup";
+            ViewBag.CategoryList = from s in db.Categories select s;
+            ViewBag.LevelList = from s in db.Levels select s;
+            var result = await YoutubeGetDurationUtil.GetYoutubeVideoDurationAsync("262PMoup--4");
+            Debug.WriteLine(result);
             return View();
         }
 

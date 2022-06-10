@@ -2,29 +2,37 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FCourse.Data;
 using FCourse.Models;
+using PagedList;
 
 namespace FCourse.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class OrdersController : Controller
     {
         private DBContext db = new DBContext();
 
         // GET: Orders
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var orders = db.Orders.OrderBy(o => o.CreatedAt);
-            return View(orders.ToList());
+            ViewBag.BreadCrumb = "Order List";
+            var orders = db.Orders.Include(o => o.User);
+            int pageNumber = (page ?? 1);
+            int pageSize = 10;
+            orders = db.Orders.OrderByDescending(o => o.CreatedAt);
+            return View(orders.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Orders/Details/5
         public ActionResult Details(string id)
         {
+            ViewBag.BreadCrumb = "Order Detail";
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

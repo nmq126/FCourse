@@ -164,6 +164,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LevelsController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\SectionsController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -214,6 +215,10 @@
     <Compile Include="Migrations\202206081423113_update-tam.cs" />
     <Compile Include="Migrations\202206081423113_update-tam.Designer.cs">
       <DependentUpon>202206081423113_update-tam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206081531436_update126.cs" />
+    <Compile Include="Migrations\202206081531436_update126.Designer.cs">
+      <DependentUpon>202206081531436_update126.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppRole.cs" />
@@ -980,6 +985,8 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Home\UserProfile.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Sections\Details.cshtml" />
+    <Content Include="Views\Sections\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1044,6 +1051,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206081423113_update-tam.resx">
       <DependentUpon>202206081423113_update-tam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206081531436_update126.resx">
+      <DependentUpon>202206081531436_update126.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

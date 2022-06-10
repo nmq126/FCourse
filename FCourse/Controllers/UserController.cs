@@ -75,7 +75,7 @@ namespace FCourse.Controllers
             }
 
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> AddRole(string RoleName)
         {
             Role role = new Role()
@@ -92,7 +92,6 @@ namespace FCourse.Controllers
                 return View("ViewError");
             }
         }
-
         public async Task<ActionResult> AddUserToRole(string UserId, string RoleId)
         {
             var user = myIdentityDbContext.Users.Find(UserId);

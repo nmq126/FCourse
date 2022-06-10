@@ -160,11 +160,43 @@ namespace FCourse.Controllers
             return this.payment.Execute(apiContext, paymentExecution);
         }
 
+        public ActionResult CheckExistCourse()
+        {
+            var listItems = new ItemList() { items = new List<Item>() };
+            Cart listCarts = Session["Cart"] as Cart;
+            List<CartItem> listItem = listCarts.Items.ToList();
+            if (listItem == null || listItem.Count() == 0)
+            {
+                TempData["data"] = "Your cart is empty.";
+                return RedirectToAction("ShowCart", "ShoppingCart");
+            }
+            if (User.Identity.IsAuthenticated)
+            {
+                string userId = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId());
+                foreach (var item in listItem)
+                {
+                    UserCourse userCourse =
+                         db.UserCourses.Where(uc => uc.CourseId == item.course.Id &&
+                         uc.UserId == userId).FirstOrDefault();
+                    if (userCourse != null)
+                    {
+                        string name = userCourse.Course.Name;
+                        TempData["data"] = "You already purchased " + name + ". Please remove it!";
+                        return RedirectToAction("ShowCart", "ShoppingCart");
+                    }
+                }
+                return this.PaymentWithPaypal();
+            }
+            else
+            {
+                TempData["data"] = "You must login before payment.";
+                return RedirectToAction("Login", "User");
+            }
+        }
+
         //Payment with paypal
         public ActionResult PaymentWithPaypal()
         {
-            if (User.Identity.IsAuthenticated)
-            {
                 APIContext apiContext = PaypalConfiguration.GetAPIContext();
                 try
                 {
@@ -302,12 +334,7 @@ namespace FCourse.Controllers
 
                 Session.Remove("Cart");
                 return View("~/Views/Home/ThankYou.cshtml");
-            }
-            else
-            {
-                TempData["data"] = "You must login before payment.";
-                return RedirectToAction("Login", "User");
-            }
+            
         }
     }
 }

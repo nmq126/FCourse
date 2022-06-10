@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace FCourse.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DashboardController : Controller
     {
         private DBContext db = new DBContext();
@@ -18,9 +19,33 @@ namespace FCourse.Controllers
             ViewBag.BreadCrumb = "Dashboard";
             List<DataPoint> dataPoints = new List<DataPoint>();
             List<long> revenueByYear = new List<long>();
+            List<string> ListofYears = new List<string>();
+            ListofYears.Add("2017");
+            ListofYears.Add("2018");
+            ListofYears.Add("2019");
+            ListofYears.Add("2020");
+            ListofYears.Add("2021");
+            ListofYears.Add("2022");
+            ViewBag.YearList = ListofYears;
+            string yearString = Convert.ToString(year);
+            if (String.IsNullOrEmpty(yearString))
+            {
+                year = 2022;
+                yearString = "2022";
+            }
+            ViewBag.SelectedYear = yearString;
+            double revenueByMonth = 0;
             for (int i = 1; i < 13; i++)
             {
-                var revenueByMonth = db.Orders.Where(s => s.CreatedAt.Month == i && s.CreatedAt.Year == year).Sum(s => s.TotalPrice);
+                if (db.Orders.Where(s => s.CreatedAt.Month == i && s.CreatedAt.Year == year).Count() == 0)
+                {
+                    revenueByMonth = 0;
+                }
+                else
+                {
+                    revenueByMonth = db.Orders.Where(s => s.CreatedAt.Month == i && s.CreatedAt.Year == year).Sum(s => s.TotalPrice);
+                }
+
                 revenueByYear.Add((long)revenueByMonth);
             }
             dataPoints.Add(new DataPoint("January", revenueByYear[0]));
@@ -35,7 +60,7 @@ namespace FCourse.Controllers
             dataPoints.Add(new DataPoint("October", revenueByYear[9]));
             dataPoints.Add(new DataPoint("November", revenueByYear[10]));
             dataPoints.Add(new DataPoint("December", revenueByYear[11]));
-            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
+            ViewBag.DataPointsColumn = JsonConvert.SerializeObject(dataPoints);
             return View();
         }
     }

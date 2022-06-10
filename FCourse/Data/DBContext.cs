@@ -33,5 +33,10 @@ namespace FCourse.Data
         }
 
         public System.Data.Entity.DbSet<FCourse.Models.Cart> Carts { get; set; }
+
+        internal void AddOrUpdate()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

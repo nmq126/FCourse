@@ -1,7 +1,9 @@
-﻿@model IEnumerable<FCourse.Models.Order>
+﻿@model PagedList.IPagedList<FCourse.Models.Order>
+@using PagedList.Mvc;
+
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Admin-Order List";
     Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
 }
 
@@ -9,6 +11,43 @@
     .row {
         display: block !important
     }
+    .pagination-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .pagination-container ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /*background-color: #333;*/
+        }
+
+        .pagination-container li {
+            float: left;
+            border-right: 1px solid #bbb;
+        }
+
+            .pagination-container li:last-child {
+                border-right: none;
+            }
+
+            .pagination-container li a {
+                display: block;
+                color: Black;
+                text-align: center;
+                padding: 8px 10px;
+                text-decoration: none;
+            }
+
+                .pagination-container li a:hover:not(.active) {
+                    background-color: white;
+                }
+
+        .pagination-container .active {
+            background-color: white;
+        }
 </style>
 
 <div class="widget has-shadow">
@@ -30,28 +69,41 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                    <tr>
-                        <td><span class="text-primary">@Html.DisplayFor(modelItem => item.Id)</span></td>
-                        <td>@Html.DisplayFor(modelItem => item.User.UserName)</td>
-                        <td>@Html.DisplayFor(modelItem => item.User.Email)</td>
-                        <td>@Html.DisplayFor(modelItem => item.User.LastName) @Html.DisplayFor(modelItem => item.User.FirstName)</td>
-                        <td>@Html.DisplayFor(modelItem => item.TotalPrice)</td>
-                        <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
-                        <td>@(item.Status == 1 ? "Done" : "Pending")</td>
-                        <td class="td-actions">
-                            <a href="@Url.Action("Details", "Orders", new { id = item.Id })">
-                                <i class="ion ion-information"></i>
-                            </a>
-                            <a href="@Url.Action("Edit", "Orders", new { id = item.Id })">
-                                <i class="ion ion-edit"></i>
-                            </a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td><span class="text-primary">@Html.DisplayFor(modelItem => item.Id)</span></td>
+                            <td>@Html.DisplayFor(modelItem => item.User.UserName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.User.Email)</td>
+                            <td>@Html.DisplayFor(modelItem => item.User.LastName) @Html.DisplayFor(modelItem => item.User.FirstName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.TotalPrice)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+                            <td>@(item.Status == 1 ? "Done" : "Pending")</td>
+                            <td class="td-actions">
+                                <a href="@Url.Action("Details", "Orders", new { id = item.Id })">
+                                    <i class="ion ion-information"></i>
+                                </a>
+                            </td>
+                        </tr>
 
                     }
 
                 </tbody>
             </table>
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+                           new { page }),
+                           new PagedListRenderOptions
+                           {
+                               DisplayLinkToIndividualPages = true,
+                               DisplayPageCountAndCurrentLocation = false,
+                               MaximumPageNumbersToDisplay = 10,
+                               LinkToFirstPageFormat = "««",
+                               LinkToPreviousPageFormat = "«",
+                               LinkToIndividualPageFormat = "{0}",
+                               LinkToNextPageFormat = "»",
+                               LinkToLastPageFormat = "»»",
+                               ContainerDivClasses = new string[] { "pagination-container mt-3" },
+                               UlElementClasses = new string[] { "pagination" },
+                               LiElementClasses = new string[] { "page-item" }
+                           })
         </div>
     </div>
 </div>

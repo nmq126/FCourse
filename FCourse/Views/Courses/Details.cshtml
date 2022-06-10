@@ -1,7 +1,7 @@
 ﻿@model FCourse.Models.Course
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Admin- Course Details";
     Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
 }
 <div class="col-xl-12">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center mb-5">
-                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Description</label>
+                    <label class="col-lg-2 form-control-label d-flex justify-content-lg-end">Detail</label>
                     <div class="col-lg-6">
                         <textarea class="form-control" rows="6" disabled>@Html.DisplayFor(model => model.Detail)
                         </textarea>
@@ -165,7 +165,7 @@
                                 <td><span class="text-primary">@Html.Raw(section.Id)</span></td>
                                 <td>@Html.Raw(section.Name)</td>
                                 <td>@(section.Type == 0 ? "Video" : "Reading")</td>
-                                <td>@(section.Type == 1 ? section.Content : "Reading content too long to display")</td>
+                                <td>@(section.Type == 0 ? section.Content : "Reading content too long to display")</td>
                                 <td>@Html.Raw(section.Duration)</td>
                                 <td class="td-actions">
                                     <a href="@Url.Action("Details", "Sections", new { id = section.Id })">

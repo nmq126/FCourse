@@ -9,14 +9,17 @@ using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace FCourse.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CoursesController : Controller
     {
         private DBContext db = new DBContext();
         // GET: Courses
+       
         public ActionResult Index(string id, string sortType, string keyword, string categoryId, string levelId, int? page)
         {
             ViewBag.BreadCrumb = "Course List";
@@ -112,7 +115,7 @@ namespace FCourse.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Course course)
+        public async Task<ActionResult> Create(Course course)
         {
             if (ModelState.IsValid)
             {
@@ -141,7 +144,7 @@ namespace FCourse.Controllers
                         } while (db.Sections.FirstOrDefault(s => s.Id == item.Id) != null);
                         if (item.Type == 0)
                         {
-                            item.Duration = YoutubeGetDurationUtil.GetYoutubeVideoDurationAsync(item.Content).Result;
+                            item.Duration = await YoutubeGetDurationUtil.GetYoutubeVideoDurationAsync(item.Content);
                         }
                         else
                         {
