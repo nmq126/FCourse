@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +10,7 @@ using System.Web;
 namespace FCourse.Models
 {
     [Table("User")]
-    public class User : IdentityUser
+    public class User : Microsoft.AspNet.Identity.EntityFramework.IdentityUser
     {
 
         //[StringLength(10)]
